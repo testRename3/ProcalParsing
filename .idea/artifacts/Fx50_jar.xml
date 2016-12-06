@@ -1,0 +1,12 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="Fx50:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/Fx50_jar</output-path>
+    <root id="archive" name="Fx50.jar">
+      <element id="module-output" name="Fx50" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/com/intellij/annotations/12.0/annotations-12.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/jetbrains/annotations-java5/15.0/annotations-java5-15.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/jars/rjm.jar" path-in-jar="/" />
+      <element id="module-output" name="main" />
+    </root>
+  </artifact>
+</component>

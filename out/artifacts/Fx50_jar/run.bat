@@ -1,0 +1,1 @@
+java -jar fx50.jar

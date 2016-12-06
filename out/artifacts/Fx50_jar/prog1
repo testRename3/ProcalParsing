@@ -1,0 +1,10 @@
+/*
+name "Quadratic Equation"
+description "ax^2+bx+c=0"
+display "Quad"
+*/
+?->$a:
+?->$b:
+?->$c:
+(-$b + sqrt($b squared - 4 * $a * $c)) / (2 $a) display
+(-$b - sqrt($b squared - 4 * $a * $c)) / (2 $a):
