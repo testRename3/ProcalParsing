@@ -25,6 +25,6 @@ public class AssignmentNode extends NumberNode {
     }
 
     public String toString() {
-        return "$"+variableName;
+        return left.toString() + "->$" + variableName;
     }
 }

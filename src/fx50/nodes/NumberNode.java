@@ -23,7 +23,7 @@ public class NumberNode implements CalculatorNode {
 
         NumberNode numberNode = (NumberNode) o;
 
-        return value == numberNode.value;
+        return value.equals(numberNode.value);
     }
 
     public BigDecimal evaluate() {

@@ -1,11 +1,9 @@
 package fx50;
 
 import fx50.nodes.CalculatorNode;
-import org.bychan.core.basic.LexParser;
 import org.bychan.core.basic.ParseResult;
 import org.bychan.core.dynamic.Language;
 
-import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.nio.charset.Charset;
@@ -45,8 +43,9 @@ public class Main {
                     return;
                 }
             }
-            String[] lines = line.split(":");
-            for (int i = 0; i < lines.length; i++) {
+            //TODO make temp file for printstream and return last line
+            //String[] lines = line.split(":");
+            /*for (int i = 0; i < lines.length; i++) {
                 //TODO remove line splitting and implement statement parsing
                 String result = "";
                 String parsedResult = "";
@@ -55,6 +54,7 @@ public class Main {
                     try {
                         pr = l.newLexParser().tryParse(lines[i]);
                         parsedResult = pr.getRootNode().toString();
+                        //TODO incorrect exponential number
                         result = pr.getRootNode().evaluate().setScale(10, BigDecimal.ROUND_HALF_UP).toPlainString();
                     } catch (Exception e) {
                         result = e.getMessage();
@@ -62,7 +62,22 @@ public class Main {
                 }
                 if (i == lines.length - 1)
                     System.out.println(parsedResult + "\n=" + result);
+            }*/
+            String result = "";
+            String parsedResult = "";
+            if (!line.equals("")) {
+                ParseResult<CalculatorNode> pr;
+                try {
+                    pr = l.newLexParser().tryParse(line);
+                    parsedResult = pr.getRootNode().toString();
+                    //TODO incorrect exponential number
+                    result = pr.getRootNode().evaluate().setScale(10, BigDecimal.ROUND_HALF_UP).toPlainString();
+                } catch (Exception e) {
+                    result = e.getMessage();
+                }
             }
+                System.out.println(parsedResult + "\n=" + result);
+
             run();
         }
     }
