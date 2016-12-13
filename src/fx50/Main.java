@@ -6,6 +6,8 @@ import org.bychan.core.dynamic.Language;
 
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.math.MathContext;
+import java.math.RoundingMode;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -70,13 +72,15 @@ public class Main {
                 try {
                     pr = l.newLexParser().tryParse(line);
                     parsedResult = pr.getRootNode().toString();
-                    //TODO incorrect exponential number
-                    result = pr.getRootNode().evaluate().setScale(10, BigDecimal.ROUND_HALF_UP).toPlainString();
+                    System.out.println(parsedResult);
+                    result = pr.getRootNode().evaluate().round(new MathContext(10, RoundingMode.HALF_UP)).stripTrailingZeros().toString();
+                    System.out.println("=" + result);
                 } catch (Exception e) {
-                    result = e.getMessage();
+                    result = "Error: " + e.getMessage();
+                    System.out.println(result);
                 }
+                System.out.println();
             }
-                System.out.println(parsedResult + "\n=" + result);
 
             run();
         }

@@ -6,7 +6,6 @@ import org.bychan.core.basic.EndToken;
 import org.bychan.core.dynamic.Language;
 import org.bychan.core.dynamic.LanguageBuilder;
 import org.bychan.core.dynamic.TokenDefinitionBuilder;
-import org.nevec.rjm.BigDecimalMath;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
@@ -14,7 +13,7 @@ import java.util.Map;
 import java.util.Scanner;
 
 /**
- * CalculatorHelper.
+ * CalculatorHelper
  */
 public class CalculatorHelper {
 
@@ -40,13 +39,19 @@ public class CalculatorHelper {
     public static LanguageBuilder<CalculatorNode> b = new LanguageBuilder<>("Fx-50F ULTRA");
 
     public static class Tokens {
-        //TODO powerNode
         //TODO xRootNode
 
+        public static TokenDefinitionBuilder<CalculatorNode> shorthandIf = b.newToken()
+                .named("shorthandIf").matchesString("=>")
+                .led((left, parser, lexeme) -> new ShorthandIfNode(left, parser));
 
         public static TokenDefinitionBuilder<CalculatorNode> power = b.newToken()
                 .named("power").matchesString("^")
                 .led((left, parser, lexeme) -> new PowerNode(left, parser.expression(left)));
+
+        public static TokenDefinitionBuilder<CalculatorNode> root = b.newToken()
+                .named("root").matchesString("root")
+                .led((left, parser, lexeme) -> new RootNode(left, parser.expression(left)));
 
         public static TokenDefinitionBuilder<CalculatorNode> colon = b.newToken()
                 .named("colon").matchesString(":")
@@ -65,9 +70,8 @@ public class CalculatorHelper {
                 .led((left, parser, lexeme) -> {
                     //Hidden Multiplication
                     CalculatorNode trailingNode = parser.expression(left);
-                    //TODO fix rparen expectation
+                    //TODO fix rparen expectation, instead include everything until statement end or rparen
                     parser.expectSingleLexeme(rparen.getKey());
-                    //TODO if nextis numbernode, mutiply
                     return new MultiplicationNode(left, trailingNode);
                 });
 
@@ -84,23 +88,20 @@ public class CalculatorHelper {
                 .nud((left, parser, lexeme) -> new RandomNumberNode());
 
         public static TokenDefinitionBuilder<CalculatorNode> variable = b.newToken()
-                .named("variable").matchesPattern("\\$[A-Za-z]+")
+                .named("variable").matchesPattern("\\$[A-Za-z_]+")
                 .nud((left, parser, lexeme) -> new VariableNode(lexeme))
                 //hidden multiplication
                 .led((left, parser, lexeme) -> new MultiplicationNode(left, new VariableNode(lexeme)));
 
         public static TokenDefinitionBuilder<CalculatorNode> constant = b.newToken()
-                .named("constant").matchesPattern("&[A-Za-z]+")
+                .named("constant").matchesPattern("&[A-Za-z_]+")
                 .nud((left, parser, lexeme) -> new ConstantNode(parser, lexeme))
                 //hidden multiplication
                 .led((left, parser, lexeme) -> new MultiplicationNode(left, new ConstantNode(parser, lexeme)));
 
         public static TokenDefinitionBuilder<CalculatorNode> number = b.newToken()
-                .named("number").matchesPattern("[0-9\\.]+")
-                .nud((left, parser, lexeme) -> new NumberNode(new BigDecimal(lexeme.getText())))
-                //hidden multiplication (imperfect, will multiply after a constant)
-                //TODO remove led
-                .led((left, parser, lexeme) -> new MultiplicationNode(left, new NumberNode(new BigDecimal(lexeme.getText()))));
+                .named("number").matchesPattern("\\d*\\.?\\d+")
+                .nud((left, parser, lexeme) -> new NumberNode(new BigDecimal(lexeme.getText())));
 
         public static TokenDefinitionBuilder<CalculatorNode> set = b.newToken()
                 .named("set").matchesString("->")
@@ -123,8 +124,9 @@ public class CalculatorHelper {
         public static TokenDefinitionBuilder<CalculatorNode> display = b.newToken()
                 .named("display").matchesString("display")
                 .led((left, parser, lexeme) -> {
-                    System.out.println(left.evaluate().setScale(10, BigDecimal.ROUND_HALF_UP).toPlainString());
-                    return new StatementNode(left, parser);
+                    if (parser.nextIs(colon.getKey()))
+                        parser.expectSingleLexeme(colon.getKey());
+                    return new DisplayNode(left, parser, System.out);
                 });
 
         public static TokenDefinitionBuilder<CalculatorNode> factorial = b.newToken()
@@ -270,17 +272,18 @@ public class CalculatorHelper {
 
         b.newToken().named("whitespace").matchesPattern("\\s+").discardAfterLexing().build();
 
-        b.newToken().named("comment").matchesPattern("\\/\\*\\S*?\\*\\/").discardAfterLexing().build();
+        b.newToken().named("comment").matchesPattern("\\/\\*.*?\\*\\/").discardAfterLexing().build();
 
-        Tokens.display.leftBindingPower(2).build();
-
-        Tokens.colon.leftBindingPower(2).build();
-
-        Tokens.conditionIfEnd.leftBindingPower(3).build();
-        Tokens.conditionIf.leftBindingPower(3).build();
+        Tokens.conditionIfEnd.leftBindingPower(2).build();
+        Tokens.conditionIf.leftBindingPower(2).build();
         Tokens.conditionThen.leftBindingPower(3).build();
-        Tokens.conditionElse.leftBindingPower(3).build();
-        Tokens.set.leftBindingPower(2).build();
+        Tokens.conditionElse.leftBindingPower(2).build();
+        Tokens.shorthandIf.leftBindingPower(2).build();
+
+        Tokens.display.leftBindingPower(3).build();
+        Tokens.colon.leftBindingPower(3).build();
+
+        Tokens.set.leftBindingPower(4).build();
 
         Tokens.negate.leftBindingPower(13).build();
 
@@ -314,6 +317,7 @@ public class CalculatorHelper {
 
         Tokens.factorial.leftBindingPower(14).build();
         Tokens.power.leftBindingPower(14).build();
+        Tokens.root.leftBindingPower(14).build();
 
         Tokens.exponential.leftBindingPower(16).build();
 

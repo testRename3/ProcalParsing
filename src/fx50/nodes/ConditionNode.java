@@ -1,6 +1,6 @@
 package fx50.nodes;
 
-
+import org.bychan.core.basic.EndToken;
 import org.bychan.core.dynamic.UserParserCallback;
 
 import java.math.BigDecimal;
@@ -8,7 +8,7 @@ import java.math.BigDecimal;
 import static fx50.CalculatorHelper.Tokens.*;
 
 /**
- * Subtraction Node
+ * Condition Node
  */
 public class ConditionNode implements CalculatorNode {
     private final CalculatorNode ifNode;
@@ -16,7 +16,7 @@ public class ConditionNode implements CalculatorNode {
     private final CalculatorNode elseNode;
 
     public ConditionNode(CalculatorNode left, UserParserCallback parser) {
-        ifNode = (CalculatorNode) parser.expression(left);
+        ifNode = (CalculatorNode) parser.expression(left, 3);
 
         parser.expectSingleLexeme(conditionThen.getKey());
         thenNode = (CalculatorNode) parser.expression(left);
@@ -28,6 +28,11 @@ public class ConditionNode implements CalculatorNode {
             elseNode = null;
 
         parser.expectSingleLexeme(conditionIfEnd.getKey());
+        if (!parser.nextIs(EndToken.get().getKey()) && !parser.nextIs(colon.getKey()))
+            parser.abort("You must end 'IfEnd' with 'colon' if it does not follow 'END'");
+
+        if (parser.nextIs(conditionThen.getKey()))
+            parser.abort("Forbidden to use an if-statement as condition");
     }
 
     public BigDecimal evaluate() {
@@ -39,10 +44,10 @@ public class ConditionNode implements CalculatorNode {
     }
 
     public String toString() {
-        return "(IF " +
+        return "If " +
                 ifNode.toString() +
-                " THEN " + thenNode.toString() +
-                (elseNode != null ? " ELSE " + elseNode.toString() : "") +
-                " IFEND)";
+                " Then " + thenNode.toString() +
+                (elseNode != null ? " Else " + elseNode.toString() : "") +
+                " IfEnd";
     }
 }

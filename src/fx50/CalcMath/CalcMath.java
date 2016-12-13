@@ -16,6 +16,10 @@ public class CalcMath {
         return n.multiply(factorial(n.subtract(new BigDecimal(1))));
     }
 
+    public static BigDecimal inverse(BigDecimal n) {
+        return BigDecimal.ONE.divide(n, n.precision(), BigDecimal.ROUND_HALF_UP);
+    }
+
     public static BigDecimal permutation (BigDecimal n, BigDecimal r) {
         BigDecimal x = n.round(new MathContext(0));
         BigDecimal y = r.round(new MathContext(0));

@@ -64,6 +64,6 @@ public class FunctionNode implements CalculatorNode {
     }
 
     public String toString() {
-        return "(" + functionName + "(" + right + "))";
+        return "(" + functionName + right + ")";
     }
 }
