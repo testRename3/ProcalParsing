@@ -46,8 +46,8 @@ public class ConditionNode implements CalculatorNode {
     public String toString() {
         return "If " +
                 ifNode.toString() +
-                " Then " + thenNode.toString() +
-                (elseNode != null ? " Else " + elseNode.toString() : "") +
-                " IfEnd";
+                " Then\n" + thenNode.toString().replaceAll("(?m)^", "  ") +
+                (elseNode != null ? "\nElse\n" + elseNode.toString().replaceAll("(?m)^", "  ") : "") +
+                "\nIfEnd";
     }
 }

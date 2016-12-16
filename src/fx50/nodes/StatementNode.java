@@ -1,5 +1,6 @@
 package fx50.nodes;
 
+import fx50.CalculatorHelper;
 import org.bychan.core.basic.EndToken;
 import org.bychan.core.dynamic.UserParserCallback;
 
@@ -25,16 +26,17 @@ public class StatementNode implements CalculatorNode {
     }
 
     public BigDecimal evaluate() {
+        BigDecimal leftResult = left.evaluate();
+        CalculatorHelper.VariableMap.setValue("~Ans", leftResult);
         if (!isLast) {
-            left.evaluate();
             return right.evaluate();
         } else
-            return left.evaluate();
+            return leftResult;
     }
 
     public String toString() {
         if (!isLast)
-            return left.toString() + ":" + right.toString();
+            return left.toString() + ":\n" + right.toString();
         else
             return left.toString() + ":";
     }

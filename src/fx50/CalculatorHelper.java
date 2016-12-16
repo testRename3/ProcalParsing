@@ -2,7 +2,6 @@ package fx50;
 
 import fx50.CalcMath.CalcMath;
 import fx50.nodes.*;
-import org.bychan.core.basic.EndToken;
 import org.bychan.core.dynamic.Language;
 import org.bychan.core.dynamic.LanguageBuilder;
 import org.bychan.core.dynamic.TokenDefinitionBuilder;
@@ -39,7 +38,10 @@ public class CalculatorHelper {
     public static LanguageBuilder<CalculatorNode> b = new LanguageBuilder<>("Fx-50F ULTRA");
 
     public static class Tokens {
-        //TODO xRootNode
+
+        public static TokenDefinitionBuilder<CalculatorNode> answer = b.newToken()
+                .named("answer").matchesString("Ans")
+                .nud((left, parser, lexeme) -> new AnswerNode());
 
         public static TokenDefinitionBuilder<CalculatorNode> shorthandIf = b.newToken()
                 .named("shorthandIf").matchesString("=>")
@@ -229,44 +231,6 @@ public class CalculatorHelper {
     }
 
     public static Language<CalculatorNode> getSimpleCalculatorLanguage() throws Exception {
-        b.newToken().named("help").matchesString("help")
-                .nud((left, parser, lexeme) -> {
-                    Scanner scanner = new Scanner(System.in);
-                    while (true) {
-                        System.out.println("" +
-                                "HELP\n" +
-                                "    prefix functions: <name>(<args>)\n" +
-                                "    suffix functions: <args> <name>\n" +
-                                "    variables: $<name>\n" +
-                                "    constants: &<name>\n\n" +
-                                "    <1> - constants\n" +
-                                "    <2> - programs\n\n" +
-                                "- enter empty line to exit help -"
-                        );
-                        System.out.print("help:");
-                        String input = scanner.nextLine();
-                        if (input.equals("1")) {
-                            System.out.println("CONSTANTS");
-                            CalcMath.listAllConstants();
-                        } else if (input.equals("2")) {
-                            System.out.println("" +
-                                    "PROGRAMS\n" +
-                                    "Using a program\n" +
-                                    "    prog<program number>\n" +
-                                    "        This will run the program stored in a file with the same name as the command.\n" +
-                                    "        'program number' is a positive integer\n\n" +
-                                    "Saving a program\n" +
-                                    "    Create a file named prog<program number> and save it in the same directory as the .jar file.\n\n" +
-                                    "- enter empty line to go back -"
-                            );
-                            System.out.print("help>programs:");
-                            scanner.nextLine();
-                        } else
-                            break;
-                    }
-                    throw new RuntimeException("--- Exit help ---");
-                }).build();
-
         b.newToken().named("clearMemory").matchesString("ClrMemory")
                 .nud((left, parser, lexeme) -> new ClearMemoryNode(left, parser, System.out)).build();
 
@@ -320,6 +284,8 @@ public class CalculatorHelper {
         Tokens.root.leftBindingPower(14).build();
 
         Tokens.exponential.leftBindingPower(16).build();
+
+        Tokens.answer.leftBindingPower(16).build();
 
         Tokens.function.leftBindingPower(15).build();
         Tokens.suffixFunction.leftBindingPower(15).build();

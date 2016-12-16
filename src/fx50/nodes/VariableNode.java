@@ -9,10 +9,14 @@ import java.math.BigDecimal;
  * Variable Node
  */
 public class VariableNode extends NumberNode {
-    private final String variableName;
+    protected final String variableName;
 
     public VariableNode(Lexeme lexeme) {
         this.variableName = lexeme.getText().substring(1);
+    }
+
+    public VariableNode(String name) {
+        this.variableName = name;
     }
 
     public BigDecimal evaluate() {

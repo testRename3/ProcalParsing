@@ -9,6 +9,7 @@ import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
 
+import static fx50.CalcMath.CalcMath.sigfig;
 import static fx50.CalculatorHelper.Tokens.colon;
 import static fx50.CalculatorHelper.Tokens.conditionElse;
 import static fx50.CalculatorHelper.Tokens.conditionIfEnd;
@@ -27,7 +28,7 @@ public class DisplayNode extends StatementNode {
     public BigDecimal evaluate() {
         BigDecimal leftResult;
         leftResult = left.evaluate();
-        out.println(leftResult.round(new MathContext(10, RoundingMode.HALF_UP)).stripTrailingZeros().toString() + " [DISPLAY]");
+        out.println(left.toString() + " = " + sigfig(leftResult, 10).toString() + " [DISPLAY]");
         if (!isLast) {
             return right.evaluate();
         } else
@@ -36,8 +37,8 @@ public class DisplayNode extends StatementNode {
 
     public String toString() {
         if (!isLast)
-            return left.toString() + "display:" + right.toString();
+            return left.toString() + " display:\n" + right.toString();
         else
-            return left.toString() + "display:";
+            return left.toString() + " display:";
     }
 }

@@ -1,18 +1,18 @@
 package fx50;
 
+import fx50.CalcMath.CalcMath;
 import fx50.nodes.CalculatorNode;
 import org.bychan.core.basic.ParseResult;
 import org.bychan.core.dynamic.Language;
 
 import java.io.IOException;
-import java.math.BigDecimal;
-import java.math.MathContext;
-import java.math.RoundingMode;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Scanner;
+
+import static fx50.CalcMath.CalcMath.sigfig;
 
 public class Main {
     static Language<CalculatorNode> l;
@@ -34,6 +34,47 @@ public class Main {
                 System.out.println("Goodbye!");
                 return;
             } else if (line.equals("")) {
+                run();
+                return;
+            } else if (line.matches("help")) {
+                helpLoop:
+                while (true) {
+                    System.out.println("" +
+                            "HELP\n" +
+                            "    prefix functions: <name>(<args>)\n" +
+                            "    suffix functions: <args> <name>\n" +
+                            "    variables: $<name>\n" +
+                            "    constants: &<name>\n\n" +
+                            "    <1> - constants\n" +
+                            "    <2> - programs\n\n" +
+                            "- enter empty line to exit help -"
+                    );
+                    System.out.print("help:");
+                    String input = scanner.nextLine();
+                    switch (input) {
+                        case "1":
+                            System.out.println("CONSTANTS");
+                            CalcMath.listAllConstants();
+                            System.out.println("- enter empty line to go back -");
+                            scanner.nextLine();
+                            break;
+                        case "2":
+                            System.out.println("" +
+                                    "PROGRAMS\n" +
+                                    "Using a program\n" +
+                                    "    prog<program number>\n" +
+                                    "        This will run the program stored in a file with the same name as the command.\n" +
+                                    "        'program number' is a positive integer\n\n" +
+                                    "Saving a program\n" +
+                                    "    Create a file named prog<program number> and save it in the same directory as the .jar file.\n\n" +
+                                    "- enter empty line to go back -"
+                            );
+                            scanner.nextLine();
+                            break;
+                        default:
+                            break helpLoop;
+                    }
+                }
                 run();
                 return;
             } else if (line.matches("prog [A-Za-z][A-Za-z\\d]*")) {
@@ -70,11 +111,10 @@ public class Main {
             if (!line.equals("")) {
                 ParseResult<CalculatorNode> pr;
                 try {
-                    pr = l.newLexParser().tryParse(line);
+                    pr = l.newLexParser().tryParse(line.replaceAll("(?<=[^:])$", ":"));
                     parsedResult = pr.getRootNode().toString();
-                    System.out.println(parsedResult);
-                    result = pr.getRootNode().evaluate().round(new MathContext(10, RoundingMode.HALF_UP)).stripTrailingZeros().toString();
-                    System.out.println("=" + result);
+                    System.out.println("---PARSED RESULT---\n" + parsedResult + "\n---END OF PARSED RESULT---");
+                    System.out.println("=" + sigfig(pr.getRootNode().evaluate(), 10).toString());
                 } catch (Exception e) {
                     result = "Error: " + e.getMessage();
                     System.out.println(result);

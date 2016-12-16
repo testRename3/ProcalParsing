@@ -20,15 +20,19 @@ public class CalcMath {
         return BigDecimal.ONE.divide(n, n.precision(), BigDecimal.ROUND_HALF_UP);
     }
 
-    public static BigDecimal permutation (BigDecimal n, BigDecimal r) {
+    public static BigDecimal permutation(BigDecimal n, BigDecimal r) {
         BigDecimal x = n.round(new MathContext(0));
         BigDecimal y = r.round(new MathContext(0));
         return factorial(x).multiply(factorial(x.subtract(y)));
     }
 
-    public static BigDecimal combination (BigDecimal n, BigDecimal r) {
+    public static BigDecimal combination(BigDecimal n, BigDecimal r) {
         BigDecimal y = r.round(new MathContext(0));
         return permutation(n, r).divide(factorial(y), precision);
+    }
+
+    public static BigDecimal sigfig(BigDecimal bigDecimal, int significantDigits) {
+        return bigDecimal.round(new MathContext(significantDigits, RoundingMode.HALF_UP)).stripTrailingZeros();
     }
 
     public static boolean isInt (BigDecimal n) {
