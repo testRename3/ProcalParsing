@@ -18,7 +18,7 @@ public class Main {
     static Language<CalculatorNode> l;
 
     public static void main(String[] args) throws Exception {
-        l = CalculatorHelper.getSimpleCalculatorLanguage();
+        l = CalculatorHelper.getFx50Language();
         System.out.println("Welcome to Fx-50F Ultra!\n" +
                 "type \"help\" for help.\n" +
                 "type \"quit\" or another common exit word to quit.");
@@ -61,12 +61,13 @@ public class Main {
                         case "2":
                             System.out.println("" +
                                     "PROGRAMS\n" +
-                                    "Using a program\n" +
-                                    "    prog<program number>\n" +
+                            "Using a program\n" +
+                                    "    prog <program name>\n" +
                                     "        This will run the program stored in a file with the same name as the command.\n" +
-                                    "        'program number' is a positive integer\n\n" +
+                                    "        'program name' is a string and a valid filename\n\n" +
                                     "Saving a program\n" +
-                                    "    Create a file named prog<program number> and save it in the same directory as the .jar file.\n\n" +
+                                    "    Create and save the program in a file named <program name>.procal in UTF-8 encoding.\n" +
+                                    "    The directory containing the .jar file is treated as the current directory for relative paths.\n" +
                                     "- enter empty line to go back -"
                             );
                             scanner.nextLine();
@@ -87,25 +88,6 @@ public class Main {
                 }
             }
             //TODO make temp file for printstream and return last line
-            //String[] lines = line.split(":");
-            /*for (int i = 0; i < lines.length; i++) {
-                //TODO remove line splitting and implement statement parsing
-                String result = "";
-                String parsedResult = "";
-                if (!lines[i].equals("")) {
-                    ParseResult<CalculatorNode> pr;
-                    try {
-                        pr = l.newLexParser().tryParse(lines[i]);
-                        parsedResult = pr.getRootNode().toString();
-                        //TODO incorrect exponential number
-                        result = pr.getRootNode().evaluate().setScale(10, BigDecimal.ROUND_HALF_UP).toPlainString();
-                    } catch (Exception e) {
-                        result = e.getMessage();
-                    }
-                }
-                if (i == lines.length - 1)
-                    System.out.println(parsedResult + "\n=" + result);
-            }*/
             String result = "";
             String parsedResult = "";
             if (!line.equals("")) {

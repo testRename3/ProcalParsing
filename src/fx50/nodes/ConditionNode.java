@@ -10,6 +10,8 @@ import static fx50.CalculatorHelper.Tokens.*;
 /**
  * Condition Node
  */
+
+//TODO must start in a new statement
 public class ConditionNode implements CalculatorNode {
     private final CalculatorNode ifNode;
     private CalculatorNode thenNode;
@@ -31,8 +33,8 @@ public class ConditionNode implements CalculatorNode {
         if (!parser.nextIs(EndToken.get().getKey()) && !parser.nextIs(colon.getKey()))
             parser.abort("You must end 'IfEnd' with 'colon' if it does not follow 'END'");
 
-        if (parser.nextIs(conditionThen.getKey()))
-            parser.abort("Forbidden to use an if-statement as condition");
+        /*if (parser.nextIs(conditionThen.getKey()))
+            parser.abort("Forbidden to use an if-statement as condition");*/
     }
 
     public BigDecimal evaluate() {

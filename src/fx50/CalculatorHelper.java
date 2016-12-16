@@ -39,6 +39,13 @@ public class CalculatorHelper {
 
     public static class Tokens {
 
+        public static TokenDefinitionBuilder<CalculatorNode> loopWhile = b.newToken()
+                .named("loopWhile").matchesString("While")
+                .nud((left, parser, lexeme) -> new WhileLoopNode(left, parser));
+
+        public static TokenDefinitionBuilder<CalculatorNode> loopWhileEnd = b.newToken()
+                .named("loopWhileEnd").matchesString("WhileEnd");
+
         public static TokenDefinitionBuilder<CalculatorNode> answer = b.newToken()
                 .named("answer").matchesString("Ans")
                 .nud((left, parser, lexeme) -> new AnswerNode());
@@ -102,8 +109,8 @@ public class CalculatorHelper {
                 .led((left, parser, lexeme) -> new MultiplicationNode(left, new ConstantNode(parser, lexeme)));
 
         public static TokenDefinitionBuilder<CalculatorNode> number = b.newToken()
-                .named("number").matchesPattern("\\d*\\.?\\d+")
-                .nud((left, parser, lexeme) -> new NumberNode(new BigDecimal(lexeme.getText())));
+                .named("number").matchesPattern("\\d*\\.?\\d+|\\.")
+                .nud((left, parser, lexeme) -> new NumberNode(new BigDecimal(lexeme.getText().equals(".") ? "0": lexeme.getText())));
 
         public static TokenDefinitionBuilder<CalculatorNode> set = b.newToken()
                 .named("set").matchesString("->")
@@ -142,12 +149,10 @@ public class CalculatorHelper {
 
         public static TokenDefinitionBuilder<CalculatorNode> multiply = b.newToken()
                 .named("multiply").matchesString("*")
-                .nud((left, parser, lexeme) -> parser.expression(left))
                 .led((left, parser, lexeme) -> new MultiplicationNode(left, parser.expression(left)));
 
         public static TokenDefinitionBuilder<CalculatorNode> divide = b.newToken()
                 .named("divide").matchesString("/")
-                .nud((left, parser, lexeme) -> parser.expression(left))
                 .led((left, parser, lexeme) -> new DivisionNode(left, parser.expression(left)));
 
         public static TokenDefinitionBuilder<CalculatorNode> minus = b.newToken()
@@ -230,7 +235,7 @@ public class CalculatorHelper {
                 .named("comma").matchesString(",");
     }
 
-    public static Language<CalculatorNode> getSimpleCalculatorLanguage() throws Exception {
+    public static Language<CalculatorNode> getFx50Language() throws Exception {
         b.newToken().named("clearMemory").matchesString("ClrMemory")
                 .nud((left, parser, lexeme) -> new ClearMemoryNode(left, parser, System.out)).build();
 
@@ -238,6 +243,8 @@ public class CalculatorHelper {
 
         b.newToken().named("comment").matchesPattern("\\/\\*.*?\\*\\/").discardAfterLexing().build();
 
+        Tokens.loopWhileEnd.leftBindingPower(2).build();
+        Tokens.loopWhile.leftBindingPower(2).build();
         Tokens.conditionIfEnd.leftBindingPower(2).build();
         Tokens.conditionIf.leftBindingPower(2).build();
         Tokens.conditionThen.leftBindingPower(3).build();
@@ -286,6 +293,7 @@ public class CalculatorHelper {
         Tokens.exponential.leftBindingPower(16).build();
 
         Tokens.answer.leftBindingPower(16).build();
+        Tokens.randomNumber.leftBindingPower(16).build();
 
         Tokens.function.leftBindingPower(15).build();
         Tokens.suffixFunction.leftBindingPower(15).build();
@@ -293,7 +301,6 @@ public class CalculatorHelper {
         Tokens.number.leftBindingPower(16).build();
         Tokens.variable.leftBindingPower(16).build();
         Tokens.constant.leftBindingPower(16).build();
-        Tokens.randomNumber.leftBindingPower(16).build();
         Tokens.input.leftBindingPower(16).build();
 
         return b.completeLanguage();
