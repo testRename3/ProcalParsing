@@ -13,7 +13,9 @@ public class RandomNumberNode implements CalculatorNode {
     public RandomNumberNode() {}
 
     public BigDecimal evaluate() {
-        return Fn.Ran(new ArrayList<BigDecimal>());
+        ArrayList<BigDecimal> args = new ArrayList<>();
+        args.add(new BigDecimal(1));
+        return Fn.Ran(args);
     }
 
     public String toString() {

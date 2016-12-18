@@ -7,6 +7,7 @@ import java.math.BigDecimal;
 
 import static fx50.CalculatorHelper.Tokens.lparen;
 import static fx50.CalculatorHelper.Tokens.rparen;
+import static fx50.ParsingHelper.nextIsStatementEnd;
 
 /**
  * Parenthesis Node
@@ -16,7 +17,8 @@ public class ParenthesisNode implements CalculatorNode {
 
     public ParenthesisNode(CalculatorNode left, UserParserCallback parser) {
         this.right = (CalculatorNode) parser.expression(left);
-        parser.expectSingleLexeme(rparen.getKey());
+        if (!nextIsStatementEnd(parser))
+            parser.expectSingleLexeme(rparen.getKey());
         if (parser.nextIs(lparen.getKey()))
             this.right = new MultiplicationNode(right, (CalculatorNode) parser.expression(right));
     }

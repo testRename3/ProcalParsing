@@ -6,6 +6,8 @@ import org.bychan.core.dynamic.UserParserCallback;
 import java.math.BigDecimal;
 
 import static fx50.CalculatorHelper.Tokens.*;
+import static fx50.ParsingHelper.indent;
+import static fx50.ParsingHelper.nextMustBeEnd;
 
 /**
  * Condition Node
@@ -30,11 +32,7 @@ public class ConditionNode implements CalculatorNode {
             elseNode = null;
 
         parser.expectSingleLexeme(conditionIfEnd.getKey());
-        if (!parser.nextIs(EndToken.get().getKey()) && !parser.nextIs(colon.getKey()))
-            parser.abort("You must end 'IfEnd' with 'colon' if it does not follow 'END'");
-
-        /*if (parser.nextIs(conditionThen.getKey()))
-            parser.abort("Forbidden to use an if-statement as condition");*/
+        nextMustBeEnd(parser, "IfEnd", true);
     }
 
     public BigDecimal evaluate() {
@@ -48,8 +46,8 @@ public class ConditionNode implements CalculatorNode {
     public String toString() {
         return "If " +
                 ifNode.toString() +
-                " Then\n" + thenNode.toString().replaceAll("(?m)^", "  ") +
-                (elseNode != null ? "\nElse\n" + elseNode.toString().replaceAll("(?m)^", "  ") : "") +
+                "Then\n" + indent(thenNode.toString()) +
+                (elseNode != null ? "\nElse\n" + indent(elseNode.toString()) : "") +
                 "\nIfEnd";
     }
 }

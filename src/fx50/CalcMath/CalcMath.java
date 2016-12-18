@@ -9,7 +9,7 @@ import java.math.RoundingMode;
  */
 public class CalcMath {
     public static final BigDecimal epsilon = new BigDecimal("1E-200");
-    public static final MathContext precision = new MathContext(15, RoundingMode.HALF_UP);
+    public static final MathContext precision = new MathContext(16, RoundingMode.HALF_UP);
 
     public static BigDecimal factorial(BigDecimal n) {
         if (n.compareTo(new BigDecimal(0)) == 0) return new BigDecimal(1);

@@ -22,13 +22,12 @@ public class Fn {
         return BigDecimalMath.sqrt(bigDecimals.get(0).setScale(200, BigDecimal.ROUND_HALF_UP)).setScale(15, BigDecimal.ROUND_HALF_UP);
     }
 
-    //TODO param will generate 0-that number
     public static BigDecimal Rnd(ArrayList<BigDecimal> bigDecimals) {
         return bigDecimals.get(0).setScale(0, BigDecimal.ROUND_HALF_UP);
     }
 
     public static BigDecimal Ran(ArrayList<BigDecimal> bigDecimals) {
-        return BigDecimal.valueOf(Math.random()).setScale(3, BigDecimal.ROUND_DOWN);
+        return BigDecimal.valueOf(Math.random()).multiply(bigDecimals.get(0)).setScale(3, BigDecimal.ROUND_DOWN);
     }
 
     public static BigDecimal sin(ArrayList<BigDecimal> bigDecimals) {
@@ -36,7 +35,6 @@ public class Fn {
     }
 
     public static BigDecimal cos(ArrayList<BigDecimal> bigDecimals) {
-        //TODO fix precision error
         return BigDecimalMath.cos(bigDecimals.get(0).setScale(200, BigDecimal.ROUND_HALF_UP)).setScale(15, BigDecimal.ROUND_HALF_UP);
     }
 
@@ -77,7 +75,6 @@ public class Fn {
     }
 
     public static BigDecimal atanh(ArrayList<BigDecimal> bigDecimals) {
-        // 0.5 ln ( (1+x)/(1-x) )
         return BigDecimalMath.log(BigDecimal.ONE
                 .add(bigDecimals.get(0))
                 .setScale(16, BigDecimal.ROUND_HALF_UP)

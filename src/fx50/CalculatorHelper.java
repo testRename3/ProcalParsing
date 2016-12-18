@@ -1,20 +1,30 @@
 package fx50;
 
-import fx50.CalcMath.CalcMath;
 import fx50.nodes.*;
 import org.bychan.core.dynamic.Language;
 import org.bychan.core.dynamic.LanguageBuilder;
 import org.bychan.core.dynamic.TokenDefinitionBuilder;
 
+import java.io.InputStream;
+import java.io.PrintStream;
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Scanner;
+
+import static fx50.ParsingHelper.nextIsStatementEnd;
 
 /**
  * CalculatorHelper
  */
 public class CalculatorHelper {
+
+    private static InputStream in = System.in;
+    private static PrintStream out = System.out;
+
+    static void setInOut(InputStream i, PrintStream o) {
+        in = i;
+        o = out;
+    }
 
     public static class VariableMap {
         private static Map<String, BigDecimal> storage = new HashMap<>();
@@ -35,9 +45,17 @@ public class CalculatorHelper {
         }
     }
 
-    public static LanguageBuilder<CalculatorNode> b = new LanguageBuilder<>("Fx-50F ULTRA");
+    static LanguageBuilder<CalculatorNode> b = new LanguageBuilder<>("Fx-50F ULTRA");
 
     public static class Tokens {
+
+        public static TokenDefinitionBuilder<CalculatorNode> MPlus = b.newToken()
+                .named("M+").matchesString("M+")
+                .led((left, parser, lexeme) -> new MPlusNode(left, parser));
+
+        public static TokenDefinitionBuilder<CalculatorNode> MMinus = b.newToken()
+                .named("M-").matchesString("M-")
+                .led((left, parser, lexeme) -> new MMinusNode(left, parser));
 
         public static TokenDefinitionBuilder<CalculatorNode> loopWhile = b.newToken()
                 .named("loopWhile").matchesString("While")
@@ -79,8 +97,8 @@ public class CalculatorHelper {
                 .led((left, parser, lexeme) -> {
                     //Hidden Multiplication
                     CalculatorNode trailingNode = parser.expression(left);
-                    //TODO fix rparen expectation, instead include everything until statement end or rparen
-                    parser.expectSingleLexeme(rparen.getKey());
+                    if (!nextIsStatementEnd(parser))
+                        parser.expectSingleLexeme(rparen.getKey());
                     return new MultiplicationNode(left, trailingNode);
                 });
 
@@ -127,7 +145,7 @@ public class CalculatorHelper {
                     if (!parser.nextIs(variable.getKey()))
                         parser.abort("Invalid assignment RHS. Expected a variable name");
                     VariableNode variableNode = (VariableNode) parser.expression(left);
-                    return new AssignmentNode(new InputNumberNode(System.in, System.out, variableNode.getName()), variableNode);
+                    return new AssignmentNode(new InputNumberNode(in, out, variableNode.getName()), variableNode);
                 });
 
         public static TokenDefinitionBuilder<CalculatorNode> display = b.newToken()
@@ -135,12 +153,12 @@ public class CalculatorHelper {
                 .led((left, parser, lexeme) -> {
                     if (parser.nextIs(colon.getKey()))
                         parser.expectSingleLexeme(colon.getKey());
-                    return new DisplayNode(left, parser, System.out);
+                    return new DisplayNode(left, parser, out);
                 });
 
         public static TokenDefinitionBuilder<CalculatorNode> factorial = b.newToken()
                 .named("factorial").matchesString("!")
-                .led((left, parser, lexeme) -> new FactorialNode(left));
+                .led((left, parser, lexeme) -> new FactorialNode(left, out));
 
         public static TokenDefinitionBuilder<CalculatorNode> modulo = b.newToken()
                 .named("modulo").matchesString("mod")
@@ -176,7 +194,7 @@ public class CalculatorHelper {
 
         public static TokenDefinitionBuilder<CalculatorNode> suffixFunction = b.newToken()
                 .named("suffixFunction").matchesPattern("[A-Za-z][A-Za-z0-9]+")
-                .led((left, parser, lexeme) -> new SuffixFunctionNode(left, parser, lexeme));
+                .led((left, parser, lexeme) -> new SuffixFunctionNode(left, parser, lexeme, out));
 
         public static TokenDefinitionBuilder<CalculatorNode> booleanNotEqual = b.newToken()
                 .named("booleanNotEqual").matchesString("!=")
@@ -237,7 +255,7 @@ public class CalculatorHelper {
 
     public static Language<CalculatorNode> getFx50Language() throws Exception {
         b.newToken().named("clearMemory").matchesString("ClrMemory")
-                .nud((left, parser, lexeme) -> new ClearMemoryNode(left, parser, System.out)).build();
+                .nud((left, parser, lexeme) -> new ClearMemoryNode(left, parser, out)).build();
 
         b.newToken().named("whitespace").matchesPattern("\\s+").discardAfterLexing().build();
 
@@ -251,6 +269,8 @@ public class CalculatorHelper {
         Tokens.conditionElse.leftBindingPower(2).build();
         Tokens.shorthandIf.leftBindingPower(2).build();
 
+        Tokens.MPlus.leftBindingPower(3).build();
+        Tokens.MMinus.leftBindingPower(3).build();
         Tokens.display.leftBindingPower(3).build();
         Tokens.colon.leftBindingPower(3).build();
 

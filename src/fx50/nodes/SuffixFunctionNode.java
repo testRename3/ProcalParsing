@@ -4,6 +4,7 @@ import fx50.CalcMath.SuffixFn;
 import org.bychan.core.basic.Lexeme;
 import org.bychan.core.dynamic.UserParserCallback;
 
+import java.io.PrintStream;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
@@ -16,23 +17,26 @@ public class SuffixFunctionNode implements CalculatorNode {
     private final CalculatorNode right;
     private final UserParserCallback parser;
     private final String functionName;
+    private final PrintStream out;
     private Method method;
     private ArrayList<BigDecimal> args = new ArrayList<>();
 
-    public SuffixFunctionNode(CalculatorNode right, UserParserCallback parser, Lexeme lexeme) {
+    public SuffixFunctionNode(CalculatorNode right, UserParserCallback parser, Lexeme lexeme, PrintStream out) {
         this.right = right;
         this.parser = parser;
         functionName = lexeme.getText();
+        this.out = out;
         try {
             method = SuffixFn.class.getMethod(functionName, ArrayList.class);
         } catch (SecurityException e) {parser.abort("Security Exception");}
         catch (NoSuchMethodException e) {parser.abort("No Such Method: " + functionName);}
     }
 
-    public SuffixFunctionNode(CalculatorNode input, UserParserCallback parser, String functionName) {
+    public SuffixFunctionNode(CalculatorNode input, UserParserCallback parser, String functionName, PrintStream out) {
         this.right = new NumberNode(new BigDecimal(0));
         this.parser = parser;
         this.functionName = functionName;
+        this.out = out;
         try {
             method = SuffixFn.class.getMethod(functionName, ArrayList.class);
         } catch (SecurityException e) {parser.abort("Security Exception");}
@@ -54,8 +58,8 @@ public class SuffixFunctionNode implements CalculatorNode {
 
         try {
             result = (BigDecimal) method.invoke(this, args);
-        } catch (IllegalArgumentException e) {System.out.println("Runtime Error: IllegalArgumentException");}
-        catch (IllegalAccessException e) {System.out.println("Runtime Error: IllegalAccessException");}
+        } catch (IllegalArgumentException e) {out.println("Runtime Error: IllegalArgumentException");}
+        catch (IllegalAccessException e) {out.println("Runtime Error: IllegalAccessException");}
         catch (InvocationTargetException e) {throw new ArithmeticException("Runtime Error: Math Error");}
 
         return result;

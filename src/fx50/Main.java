@@ -2,6 +2,7 @@ package fx50;
 
 import fx50.CalcMath.CalcMath;
 import fx50.nodes.CalculatorNode;
+import org.bychan.core.basic.LexParser;
 import org.bychan.core.basic.ParseResult;
 import org.bychan.core.dynamic.Language;
 
@@ -91,9 +92,10 @@ public class Main {
             String result = "";
             String parsedResult = "";
             if (!line.equals("")) {
+                LexParser lexParser = l.newLexParser();
                 ParseResult<CalculatorNode> pr;
                 try {
-                    pr = l.newLexParser().tryParse(line.replaceAll("(?<=[^:])$", ":"));
+                    pr = lexParser.tryParse(line.replaceAll("(?<=[^:])$", ":"));
                     parsedResult = pr.getRootNode().toString();
                     System.out.println("---PARSED RESULT---\n" + parsedResult + "\n---END OF PARSED RESULT---");
                     System.out.println("=" + sigfig(pr.getRootNode().evaluate(), 10).toString());

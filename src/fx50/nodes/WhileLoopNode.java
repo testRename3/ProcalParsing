@@ -6,6 +6,8 @@ import org.bychan.core.dynamic.UserParserCallback;
 import java.math.BigDecimal;
 
 import static fx50.CalculatorHelper.Tokens.*;
+import static fx50.ParsingHelper.indent;
+import static fx50.ParsingHelper.nextMustBeEnd;
 
 /**
  * While Loop Node
@@ -25,8 +27,7 @@ public class WhileLoopNode implements CalculatorNode {
         doNode = (CalculatorNode) parser.expression(left);
 
         parser.expectSingleLexeme(loopWhileEnd.getKey());
-        if (!parser.nextIs(EndToken.get().getKey()) && !parser.nextIs(colon.getKey()))
-            parser.abort("You must end 'WhileEnd' with 'colon' if it does not follow 'END'");
+        nextMustBeEnd(parser, "WhileEnd", true);
     }
 
     public BigDecimal evaluate() {
@@ -37,10 +38,15 @@ public class WhileLoopNode implements CalculatorNode {
         return doResult;
     }
 
+    public CalculatorNode breakLoop() {
+        breaking = true;
+        return doNode;
+    }
+
     public String toString() {
         return "While " +
                 conditionNode.toString() +
-                ":\n" + doNode.toString().replaceAll("(?m)^", "  ") +
+                ":\n" + indent(doNode.toString()) +
                 "\nWhileEnd";
     }
 }

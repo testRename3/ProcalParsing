@@ -9,9 +9,9 @@ import java.math.MathContext;
  * Constants
  */
 public enum Constants {
-    pi          (BigDecimalMath.pi(new MathContext(200)),
+    pi          (BigDecimalMath.pi(new MathContext(20)),
             "pi","-"),
-    exp         (BigDecimalMath.exp(new MathContext(200)),
+    exp         (BigDecimalMath.exp(new MathContext(20)),
             "Euler's number","-"),
     m_p         (new BigDecimal("1.67262171E-27"),
             "Proton mass","kg"),
