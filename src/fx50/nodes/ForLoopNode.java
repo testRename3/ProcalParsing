@@ -51,7 +51,7 @@ public class ForLoopNode implements CalculatorNode {
         BigDecimal doResult = new BigDecimal(0);
         BigDecimal controlVariableValue;
         try {
-            while ((controlVariableValue = VariableMap.getValue(controlVariableName)).compareTo(toResult) == -1) {
+            while ((controlVariableValue = VariableMap.getValue(controlVariableName)).compareTo(toResult) < 1) {
                 doResult = doNode.evaluate();
                 VariableMap.setValue(controlVariableName, controlVariableValue.add(BigDecimal.ONE));
             }
@@ -65,7 +65,7 @@ public class ForLoopNode implements CalculatorNode {
     public String toString() {
         return "For " + initNode.toString() + " -> " + controlVariable.toString() +
                 " To "+ toNode.toString() +
-                (stepNode == null ? "" : " Step " + stepNode.toString()) + "\n" +
+                (stepNode == null ? "" : " Step " + stepNode.toString()) + ":\n" +
                 indent(doNode.toString()) +
                 "\nNext";
     }

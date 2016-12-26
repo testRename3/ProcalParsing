@@ -14,27 +14,18 @@ import java.util.ArrayList;
  * Suffix Function Node
  */
 public class SuffixFunctionNode implements CalculatorNode {
-    private final CalculatorNode right;
-    private final UserParserCallback parser;
+    private final CalculatorNode left;
     private final String functionName;
     private final PrintStream out;
     private Method method;
     private ArrayList<BigDecimal> args = new ArrayList<>();
 
-    public SuffixFunctionNode(CalculatorNode right, UserParserCallback parser, Lexeme lexeme, PrintStream out) {
-        this.right = right;
-        this.parser = parser;
-        functionName = lexeme.getText();
-        this.out = out;
-        try {
-            method = SuffixFn.class.getMethod(functionName, ArrayList.class);
-        } catch (SecurityException e) {parser.abort("Security Exception");}
-        catch (NoSuchMethodException e) {parser.abort("No Such Method: " + functionName);}
+    public SuffixFunctionNode(CalculatorNode left, UserParserCallback parser, Lexeme lexeme, PrintStream out) {
+        this(left, parser, lexeme.getText(), out);
     }
 
     public SuffixFunctionNode(CalculatorNode input, UserParserCallback parser, String functionName, PrintStream out) {
-        this.right = new NumberNode(new BigDecimal(0));
-        this.parser = parser;
+        this.left = input;
         this.functionName = functionName;
         this.out = out;
         try {
@@ -54,7 +45,7 @@ public class SuffixFunctionNode implements CalculatorNode {
     public BigDecimal evaluate() {
         BigDecimal result = new BigDecimal(0);
 
-        args.add(right.evaluate());
+        args.add(left.evaluate());
 
         try {
             result = (BigDecimal) method.invoke(this, args);
@@ -66,6 +57,6 @@ public class SuffixFunctionNode implements CalculatorNode {
     }
 
     public String toString() {
-        return "((" + right + ")" + functionName + ")";
+        return "((" + left + ")" + functionName + ")";
     }
 }
