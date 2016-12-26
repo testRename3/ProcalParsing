@@ -11,6 +11,6 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="org.jetbrains:annotations-java5:15.0" level="project" />
     <orderEntry type="library" name="rjm" level="project" />
-    <orderEntry type="module" module-name="main" />
+    <orderEntry type="library" name="bychan-core" level="project" />
   </component>
 </module>
