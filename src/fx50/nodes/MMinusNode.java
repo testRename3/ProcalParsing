@@ -26,6 +26,6 @@ public class MMinusNode implements CalculatorNode {
     }
 
     public String toString() {
-        return "M-";
+        return "(" + left.toString() + ") M-";
     }
 }

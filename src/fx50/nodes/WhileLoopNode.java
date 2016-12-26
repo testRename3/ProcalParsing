@@ -31,14 +31,13 @@ public class WhileLoopNode implements CalculatorNode {
     public BigDecimal evaluate() {
         BigDecimal doResult = new BigDecimal(0);
         try {
-            while (conditionNode.evaluate().compareTo(BigDecimal.ONE) == 0 && !CalculatorHelper.breakingLoop) {
+            while (conditionNode.evaluate().compareTo(BigDecimal.ONE) == 0) {
                 doResult = doNode.evaluate();
             }
         } catch (RuntimeException e) {
             if (!e.getMessage().equals("Breaking"))
                 throw e;
         }
-        CalculatorHelper.breakingLoop = false;
         return doResult;
     }
 

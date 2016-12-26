@@ -98,6 +98,7 @@ public class Main {
                     pr = lexParser.tryParse(line.replaceAll("(?<=[^:])$", ":"));
                     parsedResult = pr.getRootNode().toString();
                     System.out.println("---PARSED RESULT---\n" + parsedResult + "\n---END OF PARSED RESULT---");
+                    //TODO E-2~E9 should not be shown in scientific notation
                     System.out.println("=" + sigfig(pr.getRootNode().evaluate(), 10).toString());
                 } catch (Exception e) {
                     result = "Error: " + e.getMessage();

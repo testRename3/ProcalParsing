@@ -8,6 +8,7 @@ import java.math.BigDecimal;
 import static fx50.CalculatorHelper.Tokens.*;
 import static fx50.ParsingHelper.indent;
 import static fx50.ParsingHelper.nextMustBeEnd;
+import static fx50.ParsingHelper.optionalColon;
 
 /**
  * Condition Node
@@ -23,9 +24,7 @@ public class ConditionNode implements CalculatorNode {
         //Only accepts 1 expression
         ifNode = (CalculatorNode) parser.expression(left, 3);
 
-        //Optional colon
-        if (parser.nextIs(colon.getKey()))
-            parser.expectSingleLexeme(colon.getKey());
+        optionalColon(parser);
 
         parser.expectSingleLexeme(conditionThen.getKey());
         thenNode = (CalculatorNode) parser.expression(left);

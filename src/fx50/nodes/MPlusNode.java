@@ -28,6 +28,6 @@ public class MPlusNode implements CalculatorNode {
     }
 
     public String toString() {
-        return "M+";
+        return "(" + left.toString() + ") M+";
     }
 }

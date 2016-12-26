@@ -26,8 +26,6 @@ public class CalculatorHelper {
         o = out;
     }
 
-    public static boolean breakingLoop = false;
-
     public static class VariableMap {
         private static Map<String, BigDecimal> storage = new HashMap<>();
         public static BigDecimal getValue(String name) {
@@ -51,7 +49,20 @@ public class CalculatorHelper {
 
     public static class Tokens {
 
-        public static TokenDefinitionBuilder<CalculatorNode> breaking = b.newToken()
+        public static TokenDefinitionBuilder<CalculatorNode> loopFor = b.newToken()
+                .named("for").matchesString("For")
+                .nud((left, parser, lexeme) -> new ForLoopNode(left, parser));
+
+        public static TokenDefinitionBuilder<CalculatorNode> loopTo = b.newToken()
+                .named("to").matchesString("To");
+
+        public static TokenDefinitionBuilder<CalculatorNode> loopStep = b.newToken()
+                .named("step").matchesString("Step");
+
+        public static TokenDefinitionBuilder<CalculatorNode> loopNext = b.newToken()
+                .named("next").matchesString("Next");
+
+        public static TokenDefinitionBuilder<CalculatorNode> loopBreak = b.newToken()
                 .named("break").matchesString("Break")
                 .nud((left, parser, lexeme) -> new BreakNode(parser));
 
@@ -64,11 +75,11 @@ public class CalculatorHelper {
                 .led((left, parser, lexeme) -> new MMinusNode(left, parser));
 
         public static TokenDefinitionBuilder<CalculatorNode> loopWhile = b.newToken()
-                .named("loopWhile").matchesString("While")
+                .named("while").matchesString("While")
                 .nud((left, parser, lexeme) -> new WhileLoopNode(left, parser));
 
         public static TokenDefinitionBuilder<CalculatorNode> loopWhileEnd = b.newToken()
-                .named("loopWhileEnd").matchesString("WhileEnd");
+                .named("whileEnd").matchesString("WhileEnd");
 
         public static TokenDefinitionBuilder<CalculatorNode> answer = b.newToken()
                 .named("answer").matchesString("Ans")
@@ -267,6 +278,10 @@ public class CalculatorHelper {
 
         b.newToken().named("comment").matchesPattern("\\/\\*.*?\\*\\/").discardAfterLexing().build();
 
+        Tokens.loopNext.leftBindingPower(2).build();
+        Tokens.loopFor.leftBindingPower(2).build();
+        Tokens.loopTo.leftBindingPower(3).build();
+        Tokens.loopStep.leftBindingPower(3).build();
         Tokens.loopWhileEnd.leftBindingPower(2).build();
         Tokens.loopWhile.leftBindingPower(2).build();
         Tokens.conditionIfEnd.leftBindingPower(2).build();
@@ -275,13 +290,13 @@ public class CalculatorHelper {
         Tokens.conditionElse.leftBindingPower(2).build();
         Tokens.shorthandIf.leftBindingPower(2).build();
 
-        Tokens.MPlus.leftBindingPower(3).build();
-        Tokens.MMinus.leftBindingPower(3).build();
         Tokens.display.leftBindingPower(3).build();
         Tokens.colon.leftBindingPower(3).build();
 
         Tokens.set.leftBindingPower(4).build();
-        Tokens.breaking.leftBindingPower(4).build();
+        Tokens.loopBreak.leftBindingPower(4).build();
+        Tokens.MPlus.leftBindingPower(4).build();
+        Tokens.MMinus.leftBindingPower(4).build();
 
         Tokens.negate.leftBindingPower(13).build();
 
