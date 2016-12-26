@@ -7,6 +7,8 @@ import org.bychan.core.dynamic.UserParserCallback;
 import java.io.PrintStream;
 import java.math.BigDecimal;
 
+import static fx50.ParsingHelper.nextMustBeEnd;
+
 /**
  * Clear Memory Node
  */
@@ -17,9 +19,8 @@ public class ClearMemoryNode implements CalculatorNode {
     public ClearMemoryNode(CalculatorNode left, UserParserCallback parser, PrintStream out) {
         this.left = left;
         this.out = out;
-        //TODO generalize !(:||[END]||Then||Else||IfEnd||WhileEnd||Next||...)
-        if (!(parser.nextIs(CalculatorHelper.Tokens.colon.getKey())||parser.nextIs(EndToken.get().getKey())))
-            parser.abort("Expect end of statement");
+
+        nextMustBeEnd(parser, "clearMemory", true);
     }
 
     public BigDecimal evaluate() {

@@ -20,7 +20,12 @@ public class ConditionNode implements CalculatorNode {
     private final CalculatorNode elseNode;
 
     public ConditionNode(CalculatorNode left, UserParserCallback parser) {
+        //Only accepts 1 expression
         ifNode = (CalculatorNode) parser.expression(left, 3);
+
+        //Optional colon
+        if (parser.nextIs(colon.getKey()))
+            parser.expectSingleLexeme(colon.getKey());
 
         parser.expectSingleLexeme(conditionThen.getKey());
         thenNode = (CalculatorNode) parser.expression(left);
@@ -46,7 +51,7 @@ public class ConditionNode implements CalculatorNode {
     public String toString() {
         return "If " +
                 ifNode.toString() +
-                "Then\n" + indent(thenNode.toString()) +
+                " Then\n" + indent(thenNode.toString()) +
                 (elseNode != null ? "\nElse\n" + indent(elseNode.toString()) : "") +
                 "\nIfEnd";
     }

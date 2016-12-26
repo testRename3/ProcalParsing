@@ -26,6 +26,8 @@ public class CalculatorHelper {
         o = out;
     }
 
+    public static boolean breakingLoop = false;
+
     public static class VariableMap {
         private static Map<String, BigDecimal> storage = new HashMap<>();
         public static BigDecimal getValue(String name) {
@@ -48,6 +50,10 @@ public class CalculatorHelper {
     static LanguageBuilder<CalculatorNode> b = new LanguageBuilder<>("Fx-50F ULTRA");
 
     public static class Tokens {
+
+        public static TokenDefinitionBuilder<CalculatorNode> breaking = b.newToken()
+                .named("break").matchesString("Break")
+                .nud((left, parser, lexeme) -> new BreakNode(parser));
 
         public static TokenDefinitionBuilder<CalculatorNode> MPlus = b.newToken()
                 .named("M+").matchesString("M+")
@@ -275,6 +281,7 @@ public class CalculatorHelper {
         Tokens.colon.leftBindingPower(3).build();
 
         Tokens.set.leftBindingPower(4).build();
+        Tokens.breaking.leftBindingPower(4).build();
 
         Tokens.negate.leftBindingPower(13).build();
 
