@@ -21,7 +21,8 @@ public class InputNumberNode implements CalculatorNode {
 
     public BigDecimal evaluate() {
         out.print(variableName + "?:");
-        return new BigDecimal((new Scanner(in)).nextLine());
+        String input = (new Scanner(in)).nextLine().trim();
+        return new BigDecimal(input.equals("") ? "0" : input);
     }
 
     public String toString() {

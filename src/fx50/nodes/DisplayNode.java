@@ -37,8 +37,8 @@ public class DisplayNode extends StatementNode {
 
     public String toString() {
         if (!isLast)
-            return left.toString() + " display:\n" + right.toString();
+            return left.toString() + " display\n" + right.toString();
         else
-            return left.toString() + " display:";
+            return left.toString() + " display";
     }
 }

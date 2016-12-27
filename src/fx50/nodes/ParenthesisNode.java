@@ -15,12 +15,12 @@ import static fx50.ParsingHelper.nextIsStatementEnd;
 public class ParenthesisNode implements CalculatorNode {
     private CalculatorNode right;
 
-    public ParenthesisNode(CalculatorNode left, UserParserCallback parser) {
-        this.right = (CalculatorNode) parser.expression(left);
-        if (!nextIsStatementEnd(parser))
-            parser.expectSingleLexeme(rparen.getKey());
+    public ParenthesisNode(CalculatorNode left, UserParserCallback<CalculatorNode> parser) {
+        this.right = parser.expression(left);
         if (parser.nextIs(lparen.getKey()))
             this.right = new MultiplicationNode(right, (CalculatorNode) parser.expression(right));
+        if (!nextIsStatementEnd(parser))
+            parser.expectSingleLexeme(rparen.getKey());
     }
 
     public BigDecimal evaluate() {

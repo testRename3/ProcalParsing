@@ -88,14 +88,14 @@ public class Main {
                     return;
                 }
             }
-            //TODO make temp file for printstream and return last line
-            String result = "";
-            String parsedResult = "";
+            //TODO make temp file for print stream and return last line
+            String result;
+            String parsedResult;
             if (!line.equals("")) {
-                LexParser lexParser = l.newLexParser();
+                LexParser<CalculatorNode> lexParser = l.newLexParser();
                 ParseResult<CalculatorNode> pr;
                 try {
-                    pr = lexParser.tryParse(line.replaceAll("(?<=[^:])$", ":"));
+                    pr = lexParser.tryParse(line.replaceAll("display(?!:)", "display:").replaceAll("\\s*$", "").replaceAll("(?<=[^:])$", ":"));
                     parsedResult = pr.getRootNode().toString();
                     System.out.println("---PARSED RESULT---\n" + parsedResult + "\n---END OF PARSED RESULT---");
                     //TODO E-2~E9 should not be shown in scientific notation

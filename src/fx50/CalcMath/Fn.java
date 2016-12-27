@@ -83,8 +83,12 @@ public class Fn {
     }
 
     public static BigDecimal log(ArrayList<BigDecimal> bigDecimals) {
-        return BigDecimalMath.log(bigDecimals.get(0).setScale(16, BigDecimal.ROUND_HALF_UP))
-                .divide(BigDecimalMath.log(BigDecimal.TEN.setScale(15, BigDecimal.ROUND_HALF_UP)), BigDecimal.ROUND_HALF_UP)
+        if (bigDecimals.size() == 1) {
+            bigDecimals.add(bigDecimals.get(0));
+            bigDecimals.set(0, BigDecimal.TEN);
+        }
+        return BigDecimalMath.log(bigDecimals.get(1).setScale(16, BigDecimal.ROUND_HALF_UP))
+                .divide(BigDecimalMath.log(bigDecimals.get(0).setScale(15, BigDecimal.ROUND_HALF_UP)), BigDecimal.ROUND_HALF_UP)
                 .setScale(15, BigDecimal.ROUND_HALF_UP);
     }
 

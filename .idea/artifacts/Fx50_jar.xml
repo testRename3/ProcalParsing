@@ -6,7 +6,7 @@
       <element id="extracted-dir" path="$MAVEN_REPOSITORY$/com/intellij/annotations/12.0/annotations-12.0.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/jetbrains/annotations-java5/15.0/annotations-java5-15.0.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$PROJECT_DIR$/jars/rjm.jar" path-in-jar="/" />
-      <element id="module-output" name="main" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/jars/bychan-core.jar" path-in-jar="/" />
     </root>
   </artifact>
 </component>

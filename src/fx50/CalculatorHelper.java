@@ -23,7 +23,7 @@ public class CalculatorHelper {
 
     static void setInOut(InputStream i, PrintStream o) {
         in = i;
-        o = out;
+        out = o;
     }
 
     public static class VariableMap {
@@ -48,6 +48,14 @@ public class CalculatorHelper {
     static LanguageBuilder<CalculatorNode> b = new LanguageBuilder<>("Fx-50F ULTRA");
 
     public static class Tokens {
+
+        public static TokenDefinitionBuilder<CalculatorNode> jumpGoto = b.newToken()
+                .named("goto").matchesString("Goto")
+                .nud((left, parser, lexeme) -> new ForLoopNode(left, parser));
+
+        public static TokenDefinitionBuilder<CalculatorNode> jumpLabel = b.newToken()
+                .named("lbl").matchesString("Lbl")
+                .nud((left, parser, lexeme) -> new ForLoopNode(left, parser));
 
         public static TokenDefinitionBuilder<CalculatorNode> loopFor = b.newToken()
                 .named("for").matchesString("For")
@@ -83,7 +91,8 @@ public class CalculatorHelper {
 
         public static TokenDefinitionBuilder<CalculatorNode> answer = b.newToken()
                 .named("answer").matchesString("Ans")
-                .nud((left, parser, lexeme) -> new AnswerNode());
+                .nud((left, parser, lexeme) -> new AnswerNode())
+                .led((left, parser, lexeme) -> new MultiplicationNode(left, new AnswerNode()));
 
         public static TokenDefinitionBuilder<CalculatorNode> shorthandIf = b.newToken()
                 .named("shorthandIf").matchesString("=>")
@@ -111,13 +120,8 @@ public class CalculatorHelper {
         public static TokenDefinitionBuilder<CalculatorNode> lparen = b.newToken()
                 .named("lparen").matchesString("(")
                 .nud((left, parser, lexeme) -> new ParenthesisNode(left, parser))
-                .led((left, parser, lexeme) -> {
-                    //Hidden Multiplication
-                    CalculatorNode trailingNode = parser.expression(left);
-                    if (!nextIsStatementEnd(parser))
-                        parser.expectSingleLexeme(rparen.getKey());
-                    return new MultiplicationNode(left, trailingNode);
-                });
+                //Hidden multiplication
+                .led((left, parser, lexeme) -> new MultiplicationNode(left, new ParenthesisNode(left, parser)));
 
         public static TokenDefinitionBuilder<CalculatorNode> permutation = b.newToken()
                 .named("permutation").matchesString("P")
@@ -129,7 +133,8 @@ public class CalculatorHelper {
 
         public static TokenDefinitionBuilder<CalculatorNode> randomNumber = b.newToken()
                 .named("randomNumber").matchesString("Ran#")
-                .nud((left, parser, lexeme) -> new RandomNumberNode());
+                .nud((left, parser, lexeme) -> new RandomNumberNode())
+                .led((left, parser, lexeme) -> new MultiplicationNode(left, new RandomNumberNode()));
 
         public static TokenDefinitionBuilder<CalculatorNode> variable = b.newToken()
                 .named("variable").matchesPattern("\\$[A-Za-z_]+")
@@ -168,8 +173,6 @@ public class CalculatorHelper {
         public static TokenDefinitionBuilder<CalculatorNode> display = b.newToken()
                 .named("display").matchesString("display")
                 .led((left, parser, lexeme) -> {
-                    if (parser.nextIs(colon.getKey()))
-                        parser.expectSingleLexeme(colon.getKey());
                     return new DisplayNode(left, parser, out);
                 });
 
@@ -207,7 +210,7 @@ public class CalculatorHelper {
 
         public static TokenDefinitionBuilder<CalculatorNode> function = b.newToken()
                 .named("function").matchesPattern("[A-Za-z][A-Za-z0-9]+(?=\\()")
-                .nud((left, parser, lexeme) -> new FunctionNode(parser.expression(left), parser, lexeme));
+                .nud((left, parser, lexeme) -> new FunctionNode(left, parser, lexeme));
 
         public static TokenDefinitionBuilder<CalculatorNode> suffixFunction = b.newToken()
                 .named("suffixFunction").matchesPattern("[A-Za-z][A-Za-z0-9]+")
@@ -288,22 +291,22 @@ public class CalculatorHelper {
         Tokens.conditionIf.leftBindingPower(2).build();
         Tokens.conditionThen.leftBindingPower(3).build();
         Tokens.conditionElse.leftBindingPower(2).build();
-        Tokens.shorthandIf.leftBindingPower(2).build();
 
-        Tokens.display.leftBindingPower(3).build();
+        Tokens.shorthandIf.leftBindingPower(3).build();
+        Tokens.display.leftBindingPower(4).build();
         Tokens.colon.leftBindingPower(3).build();
+        Tokens.set.leftBindingPower(3).build();
 
-        Tokens.set.leftBindingPower(4).build();
         Tokens.loopBreak.leftBindingPower(4).build();
-        Tokens.MPlus.leftBindingPower(4).build();
-        Tokens.MMinus.leftBindingPower(4).build();
+        Tokens.MPlus.leftBindingPower(5).build();
+        Tokens.MMinus.leftBindingPower(5).build();
 
         Tokens.negate.leftBindingPower(13).build();
 
         Tokens.rparen.leftBindingPower(4).build();
         Tokens.lparen.leftBindingPower(4).build();
 
-        Tokens.comma.leftBindingPower(5).build();
+        Tokens.comma.leftBindingPower(4).build();
 
         Tokens.booleanXor.leftBindingPower(5).build();
         Tokens.booleanXnor.leftBindingPower(5).build();

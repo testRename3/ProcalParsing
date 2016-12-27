@@ -43,9 +43,13 @@ public class SuffixFunctionNode implements CalculatorNode {
     }
 
     public BigDecimal evaluate() {
+        args.clear();
+
         BigDecimal result = new BigDecimal(0);
 
-        args.add(left.evaluate());
+        BigDecimal leftResult = left.evaluate();
+
+        args.add(leftResult);
 
         try {
             result = (BigDecimal) method.invoke(this, args);

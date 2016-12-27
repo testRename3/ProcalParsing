@@ -9,6 +9,7 @@ import static fx50.CalculatorHelper.Tokens.*;
 public class ParsingHelper {
     public static boolean nextIsStatementEnd(UserParserCallback parser) {
         return parser.nextIs(EndToken.get().getKey()) ||
+                parser.nextIs(set.getKey()) ||
                 parser.nextIs(loopNext.getKey()) ||
                 parser.nextIs(loopWhileEnd.getKey()) ||
                 parser.nextIs(conditionIfEnd.getKey()) ||
