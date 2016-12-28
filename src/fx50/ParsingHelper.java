@@ -23,6 +23,13 @@ public class ParsingHelper {
             parser.abort("You must end '" + nodeName + "' with 'colon' or a 'display' if the statement is not the end of a code block.");
     }
 
+    public static void consumeNextSeparator(UserParserCallback parser, String nodeName) {
+        if (nextIsStatementEnd(parser))
+            parser.expectSingleLexeme(parser.next().getToken().getKey());
+        else
+            parser.abort("You must end '" + nodeName + "' with 'colon' or a 'display' if the statement is not the end of a code block.");
+    }
+
     public static void optionalColon(UserParserCallback parser) {
         if (parser.nextIs(colon.getKey()))
             parser.expectSingleLexeme(colon.getKey());

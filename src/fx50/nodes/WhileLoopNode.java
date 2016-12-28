@@ -1,5 +1,6 @@
 package fx50.nodes;
 
+import org.bychan.core.basic.Lexeme;
 import org.bychan.core.dynamic.UserParserCallback;
 
 import java.math.BigDecimal;
@@ -17,7 +18,7 @@ public class WhileLoopNode implements CalculatorNode {
     private final CalculatorNode conditionNode;
     private CalculatorNode doNode;
 
-    public WhileLoopNode(CalculatorNode left, UserParserCallback parser) {
+    public WhileLoopNode(CalculatorNode left, UserParserCallback<CalculatorNode> parser, Lexeme<CalculatorNode> lexeme) {
         conditionNode = (CalculatorNode) parser.expression(left, 3);
 
         parser.expectSingleLexeme(colon.getKey());

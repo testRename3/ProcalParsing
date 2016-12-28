@@ -11,8 +11,6 @@ import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 
-import static fx50.ParsingHelper.nextIsStatementEnd;
-
 /**
  * CalculatorHelper
  */
@@ -53,16 +51,16 @@ public class CalculatorHelper {
         //TODO notNode
 
         public static TokenDefinitionBuilder<CalculatorNode> jumpGoto = b.newToken()
-                .named("goto").matchesString("Goto")
-                .nud((left, parser, lexeme) -> new ForLoopNode(left, parser));
+                .named("goto").matchesPattern("Goto *[\\dA-Za-z]*")
+                .nud(GotoNode::new);
 
         public static TokenDefinitionBuilder<CalculatorNode> jumpLabel = b.newToken()
-                .named("lbl").matchesString("Lbl")
-                .nud((left, parser, lexeme) -> new ForLoopNode(left, parser));
+                .named("lbl").matchesPattern("Lbl *[\\dA-Za-z]*")
+                .nud(LabelNode::new);
 
         public static TokenDefinitionBuilder<CalculatorNode> loopFor = b.newToken()
                 .named("for").matchesString("For")
-                .nud((left, parser, lexeme) -> new ForLoopNode(left, parser));
+                .nud(ForLoopNode::new);
 
         public static TokenDefinitionBuilder<CalculatorNode> loopTo = b.newToken()
                 .named("to").matchesString("To");
@@ -75,19 +73,19 @@ public class CalculatorHelper {
 
         public static TokenDefinitionBuilder<CalculatorNode> loopBreak = b.newToken()
                 .named("break").matchesString("Break")
-                .nud((left, parser, lexeme) -> new BreakNode(parser));
+                .nud(BreakNode::new);
 
         public static TokenDefinitionBuilder<CalculatorNode> MPlus = b.newToken()
                 .named("M+").matchesString("M+")
-                .led((left, parser, lexeme) -> new MPlusNode(left, parser));
+                .led(MPlusNode::new);
 
         public static TokenDefinitionBuilder<CalculatorNode> MMinus = b.newToken()
                 .named("M-").matchesString("M-")
-                .led((left, parser, lexeme) -> new MMinusNode(left, parser));
+                .led(MMinusNode::new);
 
         public static TokenDefinitionBuilder<CalculatorNode> loopWhile = b.newToken()
                 .named("while").matchesString("While")
-                .nud((left, parser, lexeme) -> new WhileLoopNode(left, parser));
+                .nud(WhileLoopNode::new);
 
         public static TokenDefinitionBuilder<CalculatorNode> loopWhileEnd = b.newToken()
                 .named("whileEnd").matchesString("WhileEnd");
@@ -284,6 +282,9 @@ public class CalculatorHelper {
         b.newToken().named("whitespace").matchesPattern("\\s+").discardAfterLexing().build();
 
         b.newToken().named("comment").matchesPattern("\\/\\*.*?\\*\\/").discardAfterLexing().build();
+
+        Tokens.jumpLabel.build();
+        Tokens.jumpGoto.build();
 
         Tokens.loopNext.leftBindingPower(2).build();
         Tokens.loopFor.leftBindingPower(2).build();

@@ -1,6 +1,7 @@
 package fx50;
 
 import fx50.nodes.CalculatorNode;
+import org.bychan.core.basic.LexParser;
 import org.bychan.core.basic.ParseResult;
 import org.bychan.core.dynamic.Language;
 
@@ -14,6 +15,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 import static fx50.CalcMath.CalcMath.sigfig;
+import static fx50.CalculatorHelper.labels;
 
 public class Fx50Parser {
     private Language<CalculatorNode> l;
@@ -41,11 +43,13 @@ public class Fx50Parser {
         }
         String result;
         String parsedResult;
+        LexParser<CalculatorNode> lexParser = l.newLexParser();
         ParseResult<CalculatorNode> pr;
         try {
-            pr = l.newLexParser().tryParse(line.replaceAll("(?<=[^:])$", ":"));
+            labels.clear();
+            pr = lexParser.tryParse(line.replaceAll("display(?!:)", "display:").replaceAll("\\s*$", "").replaceAll("(?<=[^:])$", ":"));
             parsedResult = pr.getRootNode().toString();
-            out.println("---PARSED RESULT---\n" + parsedResult + "\n---END OF PARSED RESULT---");
+            out.println("---PARSE RESULT---\n" + parsedResult + "\n---END OF PARSE RESULT---");
             out.println("=" + sigfig(pr.getRootNode().evaluate(), 10).toString());
         } catch (Exception e) {
             result = "Error: " + e.getMessage();

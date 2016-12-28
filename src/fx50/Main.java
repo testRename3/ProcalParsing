@@ -14,6 +14,7 @@ import java.nio.file.Paths;
 import java.util.Scanner;
 
 import static fx50.CalcMath.CalcMath.sigfig;
+import static fx50.CalculatorHelper.labels;
 import static fx50.ParsingHelper.indent;
 
 public class Main {
@@ -92,9 +93,9 @@ public class Main {
                 }
             } else if (line.matches("showParseResult(\\s\\S*)?")) {
                 String[] args = line.split(" ");
-                if (args.length == 2 && args[1] == "on")
+                if (args.length == 2 && args[1].equals("on"))
                     showParseResult = true;
-                else if (args.length == 2 && args[1] == "off")
+                else if (args.length == 2 && args[1].equals("off"))
                     showParseResult = false;
                 else
                     System.out.println("Use 'on' or 'off' to change property.");
@@ -109,6 +110,7 @@ public class Main {
                 LexParser<CalculatorNode> lexParser = l.newLexParser();
                 ParseResult<CalculatorNode> pr;
                 try {
+                    labels.clear();
                     pr = lexParser.tryParse(line.replaceAll("display(?!:)", "display:").replaceAll("\\s*$", "").replaceAll("(?<=[^:])$", ":"));
                     parsedResult = pr.getRootNode().toString();
                     if (showParseResult)
@@ -117,6 +119,7 @@ public class Main {
                     System.out.println("=" + sigfig(pr.getRootNode().evaluate(), 10).toString());
                 } catch (Exception e) {
                     result = "Error: " + e.getMessage();
+                    e.printStackTrace(System.out);
                     System.out.println(result);
                 }
                 System.out.println();

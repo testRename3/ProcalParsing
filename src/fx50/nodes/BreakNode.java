@@ -1,5 +1,6 @@
 package fx50.nodes;
 
+import org.bychan.core.basic.Lexeme;
 import org.bychan.core.dynamic.UserParserCallback;
 
 import java.math.BigDecimal;
@@ -12,7 +13,7 @@ import static fx50.ParsingHelper.nextMustBeSeparator;
 
 public class BreakNode implements CalculatorNode {
 
-    public BreakNode(UserParserCallback parser) {
+    public BreakNode(CalculatorNode left, UserParserCallback<CalculatorNode> parser, Lexeme<CalculatorNode> lexeme) {
         nextMustBeSeparator(parser, "break");
     }
 
