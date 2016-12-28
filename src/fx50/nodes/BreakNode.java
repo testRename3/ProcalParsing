@@ -4,7 +4,7 @@ import org.bychan.core.dynamic.UserParserCallback;
 
 import java.math.BigDecimal;
 
-import static fx50.ParsingHelper.nextMustBeEnd;
+import static fx50.ParsingHelper.nextMustBeSeparator;
 
 /**
  * Break Node
@@ -13,7 +13,7 @@ import static fx50.ParsingHelper.nextMustBeEnd;
 public class BreakNode implements CalculatorNode {
 
     public BreakNode(UserParserCallback parser) {
-        nextMustBeEnd(parser, "break", false);
+        nextMustBeSeparator(parser, "break");
     }
 
     public BigDecimal evaluate() {

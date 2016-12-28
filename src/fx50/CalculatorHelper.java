@@ -45,9 +45,12 @@ public class CalculatorHelper {
         }
     }
 
+    public static Map<String, CalculatorNode> labels = new HashMap<>();
+
     static LanguageBuilder<CalculatorNode> b = new LanguageBuilder<>("Fx-50F ULTRA");
 
     public static class Tokens {
+        //TODO notNode
 
         public static TokenDefinitionBuilder<CalculatorNode> jumpGoto = b.newToken()
                 .named("goto").matchesString("Goto")
@@ -210,7 +213,8 @@ public class CalculatorHelper {
 
         public static TokenDefinitionBuilder<CalculatorNode> function = b.newToken()
                 .named("function").matchesPattern("[A-Za-z][A-Za-z0-9]+(?=\\()")
-                .nud((left, parser, lexeme) -> new FunctionNode(left, parser, lexeme));
+                .nud(FunctionNode::new)
+                .led((left, parser, lexeme) -> new MultiplicationNode(left, new FunctionNode(left, parser, lexeme)));
 
         public static TokenDefinitionBuilder<CalculatorNode> suffixFunction = b.newToken()
                 .named("suffixFunction").matchesPattern("[A-Za-z][A-Za-z0-9]+")
@@ -340,13 +344,13 @@ public class CalculatorHelper {
         Tokens.answer.leftBindingPower(16).build();
         Tokens.randomNumber.leftBindingPower(16).build();
 
-        Tokens.function.leftBindingPower(15).build();
+        Tokens.function.leftBindingPower(10).build();
         Tokens.suffixFunction.leftBindingPower(15).build();
 
-        Tokens.number.leftBindingPower(16).build();
-        Tokens.variable.leftBindingPower(16).build();
-        Tokens.constant.leftBindingPower(16).build();
-        Tokens.input.leftBindingPower(16).build();
+        Tokens.number.leftBindingPower(10).build();
+        Tokens.variable.leftBindingPower(10).build();
+        Tokens.constant.leftBindingPower(10).build();
+        Tokens.input.leftBindingPower(10).build();
 
         return b.completeLanguage();
     }

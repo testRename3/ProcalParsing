@@ -5,7 +5,7 @@ import org.bychan.core.dynamic.UserParserCallback;
 
 import java.math.BigDecimal;
 
-import static fx50.ParsingHelper.nextMustBeEnd;
+import static fx50.ParsingHelper.nextMustBeSeparator;
 
 /**
  * M+ Node
@@ -15,7 +15,7 @@ public class MMinusNode implements CalculatorNode {
 
     public MMinusNode(CalculatorNode left, UserParserCallback parser) {
         this.left = left;
-        nextMustBeEnd(parser, "M-", true);
+        nextMustBeSeparator(parser, "M-");
     }
 
     public BigDecimal evaluate() {

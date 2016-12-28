@@ -1,13 +1,12 @@
 package fx50.nodes;
 
-import org.bychan.core.basic.EndToken;
 import org.bychan.core.dynamic.UserParserCallback;
 
 import java.math.BigDecimal;
 
 import static fx50.CalculatorHelper.Tokens.*;
 import static fx50.ParsingHelper.indent;
-import static fx50.ParsingHelper.nextMustBeEnd;
+import static fx50.ParsingHelper.nextMustBeSeparator;
 import static fx50.ParsingHelper.optionalColon;
 
 /**
@@ -36,11 +35,11 @@ public class ConditionNode implements CalculatorNode {
             elseNode = null;
 
         parser.expectSingleLexeme(conditionIfEnd.getKey());
-        nextMustBeEnd(parser, "IfEnd", true);
+        nextMustBeSeparator(parser, "IfEnd");
     }
 
     public BigDecimal evaluate() {
-        if (ifNode.evaluate().compareTo(BigDecimal.ONE) == 0) {
+        if (ifNode.evaluate().compareTo(BigDecimal.ZERO) != 0) {
             return thenNode.evaluate();
         } else if (elseNode != null)
             return elseNode.evaluate();

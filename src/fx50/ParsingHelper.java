@@ -18,11 +18,9 @@ public class ParsingHelper {
                 parser.nextIs(display.getKey());
     }
 
-    public static void nextMustBeEnd(UserParserCallback parser, String nodeName, boolean displayable) {
-        if (!parser.nextIs(EndToken.get().getKey()) &&
-                !parser.nextIs(colon.getKey()) &&
-                (!displayable || !parser.nextIs(display.getKey())))
-            parser.abort("You must end '" + nodeName + "' with 'colon'" + (displayable ? " or a 'display'" : "") + " if it does not follow 'END'");
+    public static void nextMustBeSeparator(UserParserCallback parser, String nodeName) {
+        if (!nextIsStatementEnd(parser))
+            parser.abort("You must end '" + nodeName + "' with 'colon' or a 'display' if the statement is not the end of a code block.");
     }
 
     public static void optionalColon(UserParserCallback parser) {

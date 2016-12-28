@@ -14,15 +14,18 @@ import java.nio.file.Paths;
 import java.util.Scanner;
 
 import static fx50.CalcMath.CalcMath.sigfig;
+import static fx50.ParsingHelper.indent;
 
 public class Main {
     static Language<CalculatorNode> l;
+    static boolean showParseResult = true;
 
     public static void main(String[] args) throws Exception {
         l = CalculatorHelper.getFx50Language();
         System.out.println("Welcome to Fx-50F Ultra!\n" +
-                "type \"help\" for help.\n" +
-                "type \"quit\" or another common exit word to quit.");
+                "enter 'help' for help.\n" +
+                "enter 'quit' or another common exit word to quit.\n" +
+                "enter 'showParseResult off' to turn off parse result.");
         Run.run();
     }
 
@@ -83,10 +86,21 @@ public class Main {
                 try {
                     line = readFile(line.substring(5)+".procal", StandardCharsets.UTF_8);
                 } catch (IOException e) {
-                    System.out.println("No program found with name \"" + line.substring(5) + "\"!");
+                    System.out.println("No program found with name '" + line.substring(5) + "'!");
                     run();
                     return;
                 }
+            } else if (line.matches("showParseResult(\\s\\S*)?")) {
+                String[] args = line.split(" ");
+                if (args.length == 2 && args[1] == "on")
+                    showParseResult = true;
+                else if (args.length == 2 && args[1] == "off")
+                    showParseResult = false;
+                else
+                    System.out.println("Use 'on' or 'off' to change property.");
+                System.out.println("Parse result will " + (!showParseResult ? "not ": "") + "be shown.");
+                run();
+                return;
             }
             //TODO make temp file for print stream and return last line
             String result;
@@ -97,7 +111,8 @@ public class Main {
                 try {
                     pr = lexParser.tryParse(line.replaceAll("display(?!:)", "display:").replaceAll("\\s*$", "").replaceAll("(?<=[^:])$", ":"));
                     parsedResult = pr.getRootNode().toString();
-                    System.out.println("---PARSED RESULT---\n" + parsedResult + "\n---END OF PARSED RESULT---");
+                    if (showParseResult)
+                        System.out.println("----PARSE RESULT----\n" + indent(parsedResult) + "\n---END OF PARSE RESULT---");
                     //TODO E-2~E9 should not be shown in scientific notation
                     System.out.println("=" + sigfig(pr.getRootNode().evaluate(), 10).toString());
                 } catch (Exception e) {

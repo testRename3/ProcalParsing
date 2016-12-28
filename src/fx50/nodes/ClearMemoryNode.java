@@ -1,13 +1,12 @@
 package fx50.nodes;
 
 import fx50.CalculatorHelper;
-import org.bychan.core.basic.EndToken;
 import org.bychan.core.dynamic.UserParserCallback;
 
 import java.io.PrintStream;
 import java.math.BigDecimal;
 
-import static fx50.ParsingHelper.nextMustBeEnd;
+import static fx50.ParsingHelper.nextMustBeSeparator;
 
 /**
  * Clear Memory Node
@@ -20,7 +19,7 @@ public class ClearMemoryNode implements CalculatorNode {
         this.left = left;
         this.out = out;
 
-        nextMustBeEnd(parser, "clearMemory", true);
+        nextMustBeSeparator(parser, "clearMemory");
     }
 
     public BigDecimal evaluate() {

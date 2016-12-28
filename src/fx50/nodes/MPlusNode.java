@@ -1,13 +1,11 @@
 package fx50.nodes;
 
 import fx50.CalculatorHelper;
-import org.bychan.core.basic.EndToken;
 import org.bychan.core.dynamic.UserParserCallback;
 
 import java.math.BigDecimal;
 
-import static fx50.CalculatorHelper.Tokens.colon;
-import static fx50.ParsingHelper.nextMustBeEnd;
+import static fx50.ParsingHelper.nextMustBeSeparator;
 
 /**
  * M+ Node
@@ -17,7 +15,7 @@ public class MPlusNode implements CalculatorNode {
 
     public MPlusNode(CalculatorNode left, UserParserCallback parser) {
         this.left = left;
-        nextMustBeEnd(parser, "M+", true);
+        nextMustBeSeparator(parser, "M+");
     }
 
     public BigDecimal evaluate() {

@@ -7,8 +7,7 @@ import java.math.BigDecimal;
 import static fx50.CalculatorHelper.VariableMap;
 import static fx50.CalculatorHelper.Tokens.*;
 import static fx50.ParsingHelper.indent;
-import static fx50.ParsingHelper.nextMustBeEnd;
-import static fx50.ParsingHelper.optionalColon;
+import static fx50.ParsingHelper.nextMustBeSeparator;
 
 /**
  * While Loop Node
@@ -41,7 +40,7 @@ public class ForLoopNode implements CalculatorNode {
         doNode = (CalculatorNode) parser.expression(left);
 
         parser.expectSingleLexeme(loopNext.getKey());
-        nextMustBeEnd(parser, "Next", true);
+        nextMustBeSeparator(parser, "Next");
     }
 
     public BigDecimal evaluate() {

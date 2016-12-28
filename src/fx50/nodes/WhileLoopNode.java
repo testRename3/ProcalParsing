@@ -1,13 +1,12 @@
 package fx50.nodes;
 
-import fx50.CalculatorHelper;
 import org.bychan.core.dynamic.UserParserCallback;
 
 import java.math.BigDecimal;
 
 import static fx50.CalculatorHelper.Tokens.*;
 import static fx50.ParsingHelper.indent;
-import static fx50.ParsingHelper.nextMustBeEnd;
+import static fx50.ParsingHelper.nextMustBeSeparator;
 
 /**
  * While Loop Node
@@ -25,7 +24,7 @@ public class WhileLoopNode implements CalculatorNode {
         doNode = (CalculatorNode) parser.expression(left);
 
         parser.expectSingleLexeme(loopWhileEnd.getKey());
-        nextMustBeEnd(parser, "WhileEnd", true);
+        nextMustBeSeparator(parser, "WhileEnd");
     }
 
     public BigDecimal evaluate() {
