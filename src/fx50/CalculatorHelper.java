@@ -356,6 +356,8 @@ public class CalculatorHelper {
         Tokens.constant.leftBindingPower(10).build();
         Tokens.input.leftBindingPower(10).build();
 
+        // leftBindingPower applies only to led; this merges the left to group tokens thus write the tree of brackets
+
         return b.completeLanguage();
     }
 }
