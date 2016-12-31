@@ -50,13 +50,16 @@ public class CalculatorHelper {
     public static class Tokens {
         //TODO notNode
 
+        /*
+        No way of implementing for now
+
         public static TokenDefinitionBuilder<CalculatorNode> jumpGoto = b.newToken()
                 .named("goto").matchesPattern("Goto *[\\dA-Za-z]*")
                 .nud(GotoNode::new);
 
         public static TokenDefinitionBuilder<CalculatorNode> jumpLabel = b.newToken()
                 .named("lbl").matchesPattern("Lbl *[\\dA-Za-z]*")
-                .nud(LabelNode::new);
+                .nud(LabelNode::new);*/
 
         public static TokenDefinitionBuilder<CalculatorNode> loopFor = b.newToken()
                 .named("for").matchesString("For")
@@ -283,8 +286,8 @@ public class CalculatorHelper {
 
         b.newToken().named("comment").matchesPattern("\\/\\*.*?\\*\\/").discardAfterLexing().build();
 
-        Tokens.jumpLabel.build();
-        Tokens.jumpGoto.build();
+        //Tokens.jumpLabel.build();
+        //Tokens.jumpGoto.build();
 
         Tokens.loopNext.leftBindingPower(2).build();
         Tokens.loopFor.leftBindingPower(2).build();
@@ -342,8 +345,8 @@ public class CalculatorHelper {
 
         Tokens.exponential.leftBindingPower(16).build();
 
-        Tokens.answer.leftBindingPower(16).build();
-        Tokens.randomNumber.leftBindingPower(16).build();
+        Tokens.answer.leftBindingPower(10).build();
+        Tokens.randomNumber.leftBindingPower(10).build();
 
         Tokens.function.leftBindingPower(10).build();
         Tokens.suffixFunction.leftBindingPower(15).build();
