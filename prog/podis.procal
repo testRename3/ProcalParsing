@@ -1,0 +1,10 @@
+/* Poisson Distribution */
+?->$A: ?->$B: $B->$C: ?->$C: 0->$M:
+For $B -> $B To $C:
+	$M + $A^$B / ($B factorial * &exp^($A)) -> $M
+Next:
+$M
+
+/* Usage */
+/* X ~ Po(5), Find P(X=4) ==> Enter 5, 4, 4 */
+/* X ~ Po(6), Find P(2<=X<=4) ==> Enter 6, 2, 4 */
