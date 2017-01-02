@@ -93,8 +93,7 @@ public class CalculatorHelper {
 
         public static TokenDefinitionBuilder<CalculatorNode> answer = b.newToken()
                 .named("answer").matchesString("Ans")
-                .nud((left, parser, lexeme) -> new AnswerNode())
-                .led((left, parser, lexeme) -> new MultiplicationNode(left, new AnswerNode()));
+                .nud((left, parser, lexeme) -> new AnswerNode());
 
         public static TokenDefinitionBuilder<CalculatorNode> shorthandIf = b.newToken()
                 .named("shorthandIf").matchesString("=>")
@@ -133,8 +132,7 @@ public class CalculatorHelper {
 
         public static TokenDefinitionBuilder<CalculatorNode> randomNumber = b.newToken()
                 .named("randomNumber").matchesString("Ran#")
-                .nud((left, parser, lexeme) -> new RandomNumberNode())
-                .led((left, parser, lexeme) -> new MultiplicationNode(left, new RandomNumberNode()));
+                .nud((left, parser, lexeme) -> new RandomNumberNode());
 
         public static TokenDefinitionBuilder<CalculatorNode> variable = b.newToken()
                 .named("variable").matchesPattern("\\$[A-Za-z_][A-Za-z_0-9]*")
@@ -205,13 +203,11 @@ public class CalculatorHelper {
 
         public static TokenDefinitionBuilder<CalculatorNode> exponential = b.newToken()
                 .named("exponential").matchesPattern("E-*\\d\\d?(?!\\d)")
-                .nud((left, parser, lexeme) -> new ExponentialNode(lexeme))
-                .led((left, parser, lexeme) -> new MultiplicationNode(left, new ExponentialNode(lexeme)));
+                .nud((left, parser, lexeme) -> new ExponentialNode(lexeme));
 
         public static TokenDefinitionBuilder<CalculatorNode> function = b.newToken()
                 .named("function").matchesPattern("[A-Za-z][A-Za-z0-9]+(?=\\()")
-                .nud(FunctionNode::new)
-                .led((left, parser, lexeme) -> new MultiplicationNode(left, new FunctionNode(left, parser, lexeme)));
+                .nud(FunctionNode::new);
 
         public static TokenDefinitionBuilder<CalculatorNode> suffixFunction = b.newToken()
                 .named("suffixFunction").matchesPattern("[A-Za-z][A-Za-z0-9]+")
