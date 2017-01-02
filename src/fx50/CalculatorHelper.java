@@ -298,7 +298,7 @@ public class CalculatorHelper {
 
         Tokens.shorthandIf.leftBindingPower(3).build();
         Tokens.display.leftBindingPower(3).build();
-        Tokens.colon.leftBindingPower(3).build();
+        Tokens.colon.leftBindingPower(2).build();
         Tokens.set.leftBindingPower(3).build();
 
         Tokens.loopBreak.leftBindingPower(4).build();
