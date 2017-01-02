@@ -19,7 +19,7 @@ public class BooleanEqualNode implements BooleanNode {
     }
 
     public String toString() {
-        return "(" + left.toString() + "==" + right.toString() + ")";
+        return "(" + left.toString() + ")==(" + right.toString() + ")";
     }
 
     public BigDecimal compare(CalculatorNode left, CalculatorNode right) {

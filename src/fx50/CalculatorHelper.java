@@ -43,13 +43,11 @@ public class CalculatorHelper {
         }
     }
 
-    public static Map<String, CalculatorNode> labels = new HashMap<>();
+    //public static Map<String, CalculatorNode> labels = new HashMap<>();
 
     static LanguageBuilder<CalculatorNode> b = new LanguageBuilder<>("Fx-50F ULTRA");
 
     public static class Tokens {
-        //TODO notNode
-
         /*
         No way of implementing for now
 
@@ -123,9 +121,7 @@ public class CalculatorHelper {
 
         public static TokenDefinitionBuilder<CalculatorNode> lparen = b.newToken()
                 .named("lparen").matchesString("(")
-                .nud((left, parser, lexeme) -> new ParenthesisNode(left, parser))
-                //Hidden multiplication
-                .led((left, parser, lexeme) -> new MultiplicationNode(left, new ParenthesisNode(left, parser)));
+                .nud((left, parser, lexeme) -> new ParenthesisNode(left, parser));
 
         public static TokenDefinitionBuilder<CalculatorNode> permutation = b.newToken()
                 .named("permutation").matchesString("P")
@@ -141,20 +137,20 @@ public class CalculatorHelper {
                 .led((left, parser, lexeme) -> new MultiplicationNode(left, new RandomNumberNode()));
 
         public static TokenDefinitionBuilder<CalculatorNode> variable = b.newToken()
-                .named("variable").matchesPattern("\\$[A-Za-z_]+")
-                .nud((left, parser, lexeme) -> new VariableNode(lexeme))
-                //hidden multiplication
-                .led((left, parser, lexeme) -> new MultiplicationNode(left, new VariableNode(lexeme)));
+                .named("variable").matchesPattern("\\$[A-Za-z_][A-Za-z_0-9]*")
+                .nud((left, parser, lexeme) -> new VariableNode(lexeme));
 
         public static TokenDefinitionBuilder<CalculatorNode> constant = b.newToken()
-                .named("constant").matchesPattern("&[A-Za-z_]+")
-                .nud((left, parser, lexeme) -> new ConstantNode(parser, lexeme))
-                //hidden multiplication
-                .led((left, parser, lexeme) -> new MultiplicationNode(left, new ConstantNode(parser, lexeme)));
+                .named("constant").matchesPattern("&[A-Za-z_][A-Za-z_0-9]*")
+                .nud((left, parser, lexeme) -> new ConstantNode(parser, lexeme));
 
         public static TokenDefinitionBuilder<CalculatorNode> number = b.newToken()
-                .named("number").matchesPattern("\\d*\\.?\\d+|\\.")
+                .named("number").matchesPattern("\\d*\\.?\\d+|\\\\.")
                 .nud((left, parser, lexeme) -> new NumberNode(new BigDecimal(lexeme.getText().equals(".") ? "0": lexeme.getText())));
+
+        public static TokenDefinitionBuilder<CalculatorNode> percent = b.newToken()
+                .named("percent").matchesString("%")
+                .led(PercentNode::new);
 
         public static TokenDefinitionBuilder<CalculatorNode> set = b.newToken()
                 .named("set").matchesString("->")
@@ -245,6 +241,10 @@ public class CalculatorHelper {
                 .named("booleanGreaterThan").matchesString(">")
                 .led((left, parser, lexeme) -> new BooleanGreaterThanNode(left, parser.expression(left)));
 
+        public static TokenDefinitionBuilder<CalculatorNode> booleanNot = b.newToken()
+                .named("not").matchesString("not")
+                .nud(BooleanNotNode::new);
+
         public static TokenDefinitionBuilder<CalculatorNode> booleanAnd = b.newToken()
                 .named("and").matchesString("and")
                 .led((left, parser, lexeme) -> new BooleanAndNode(left, parser.expression(left)));
@@ -322,6 +322,8 @@ public class CalculatorHelper {
 
         Tokens.booleanAnd.leftBindingPower(6).build();
 
+        Tokens.booleanNot.leftBindingPower(7).build();
+
         Tokens.booleanEqual.leftBindingPower(8).build();
         Tokens.booleanNotEqual.leftBindingPower(8).build();
         Tokens.booleanLesserThanOrEquals.leftBindingPower(8).build();
@@ -350,6 +352,7 @@ public class CalculatorHelper {
 
         Tokens.function.leftBindingPower(10).build();
         Tokens.suffixFunction.leftBindingPower(15).build();
+        Tokens.percent.leftBindingPower(15).build();
 
         Tokens.number.leftBindingPower(10).build();
         Tokens.variable.leftBindingPower(10).build();

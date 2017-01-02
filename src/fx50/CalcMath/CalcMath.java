@@ -8,7 +8,6 @@ import java.math.RoundingMode;
  * CalcMath
  */
 public class CalcMath {
-    public static final BigDecimal epsilon = new BigDecimal("1E-200");
     public static final MathContext precision = new MathContext(16, RoundingMode.HALF_UP);
 
     public static BigDecimal factorial(BigDecimal n) {

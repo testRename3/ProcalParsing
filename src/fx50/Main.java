@@ -14,7 +14,6 @@ import java.nio.file.Paths;
 import java.util.Scanner;
 
 import static fx50.CalcMath.CalcMath.sigfig;
-import static fx50.CalculatorHelper.labels;
 import static fx50.ParsingHelper.indent;
 
 public class Main {
@@ -110,8 +109,14 @@ public class Main {
                 LexParser<CalculatorNode> lexParser = l.newLexParser();
                 ParseResult<CalculatorNode> pr;
                 try {
-                    labels.clear();
-                    pr = lexParser.tryParse(line.replaceAll("display(?!:)", "display:").replaceAll("\\s*$", "").replaceAll("(?<=[^:])$", ":"));
+                    //labels.clear();
+                    pr = lexParser.tryParse(
+                            line
+                            .replaceAll("display(?!:)", "display:")
+                            .replaceAll("\\s*$", "")
+                            .replaceAll("(?<=[^:])$", ":")
+                            .replaceAll("((?:(?:&|\\$)\\w*)|\\)|\\d|%)(?: *)(\\(|&|\\$)", "$1*$2")
+                    );
                     parsedResult = pr.getRootNode().toString();
                     if (showParseResult)
                         System.out.println("----PARSE RESULT----\n" + indent(parsedResult) + "\n---END OF PARSE RESULT---");

@@ -19,7 +19,7 @@ public class BooleanAndNode implements BooleanNode {
     }
 
     public String toString() {
-        return "(" + left.toString() + "and" + right.toString() + ")";
+        return "(" + left.toString() + ")and(" + right.toString() + ")";
     }
 
     public BigDecimal compare(CalculatorNode left, CalculatorNode right) {

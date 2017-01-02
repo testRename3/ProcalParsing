@@ -26,6 +26,26 @@ public class Fn {
         return bigDecimals.get(0).setScale(0, BigDecimal.ROUND_HALF_UP);
     }
 
+    public static BigDecimal Rnd_Down(ArrayList<BigDecimal> bigDecimals) {
+        return bigDecimals.get(0).setScale(0, BigDecimal.ROUND_DOWN);
+    }
+
+    public static BigDecimal Rnd_Up(ArrayList<BigDecimal> bigDecimals) {
+        return bigDecimals.get(0).setScale(0, BigDecimal.ROUND_UP);
+    }
+
+    public static BigDecimal Floor(ArrayList<BigDecimal> bigDecimals) {
+        return bigDecimals.get(0).setScale(0, BigDecimal.ROUND_FLOOR);
+    }
+
+    public static BigDecimal Ceiling(ArrayList<BigDecimal> bigDecimals) {
+        return bigDecimals.get(0).setScale(0, BigDecimal.ROUND_CEILING);
+    }
+
+    public static BigDecimal Abs(ArrayList<BigDecimal> bigDecimals) {
+        return bigDecimals.get(0).abs();
+    }
+
     public static BigDecimal Ran(ArrayList<BigDecimal> bigDecimals) {
         return BigDecimal.valueOf(Math.random()).multiply(bigDecimals.get(0)).setScale(3, BigDecimal.ROUND_DOWN);
     }

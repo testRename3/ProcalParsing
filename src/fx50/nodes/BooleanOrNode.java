@@ -19,7 +19,7 @@ public class BooleanOrNode implements BooleanNode {
     }
 
     public String toString() {
-        return "(" + left.toString() + "or" + right.toString() + ")";
+        return "(" + left.toString() + ")or(" + right.toString() + ")";
     }
 
     public BigDecimal compare(CalculatorNode left, CalculatorNode right) {

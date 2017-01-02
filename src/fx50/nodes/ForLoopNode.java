@@ -24,21 +24,21 @@ public class ForLoopNode implements CalculatorNode {
 
     public ForLoopNode(CalculatorNode left, UserParserCallback<CalculatorNode> parser, Lexeme<CalculatorNode> lexeme) {
         //Expression before set
-        initNode = (CalculatorNode) parser.expression(left, 4);
+        initNode = parser.expression(left, 4);
         parser.expectSingleLexeme(set.getKey());
         controlVariable = (VariableNode) parser.parseSingleToken(left, variable.getKey());
         parser.expectSingleLexeme(loopTo.getKey());
 
-        toNode = (CalculatorNode) parser.expression(left, 3);
+        toNode = parser.expression(left, 3);
 
         if (parser.nextIs(loopStep.getKey())) {
             parser.expectSingleLexeme(loopStep.getKey());
-            stepNode = (CalculatorNode) parser.expression(left, 3);
+            stepNode = parser.expression(left, 3);
         }
 
         parser.expectSingleLexeme(colon.getKey());
 
-        doNode = (CalculatorNode) parser.expression(left);
+        doNode = parser.expression(left);
 
         parser.expectSingleLexeme(loopNext.getKey());
         nextMustBeSeparator(parser, "Next");

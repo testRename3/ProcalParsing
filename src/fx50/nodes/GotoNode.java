@@ -6,7 +6,6 @@ import org.bychan.core.dynamic.UserParserCallback;
 import java.math.BigDecimal;
 
 import static fx50.CalculatorHelper.VariableMap;
-import static fx50.CalculatorHelper.labels;
 import static fx50.ParsingHelper.nextMustBeSeparator;
 
 /**
@@ -26,8 +25,8 @@ public class GotoNode implements CalculatorNode {
     }
 
     public BigDecimal evaluate() {
-        if (labels.containsKey(label))
-            return parser.expression(labels.get(label)).evaluate();
+        /*if (labels.containsKey(label))
+            return parser.expression(labels.get(label)).evaluate();*/
         throw new RuntimeException("Label '" + label + "' not found.");
     }
 

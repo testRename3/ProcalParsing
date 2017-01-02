@@ -19,7 +19,7 @@ public class BooleanXnorNode implements BooleanNode {
     }
 
     public String toString() {
-        return "(" + left.toString() + "xnor" + right.toString() + ")";
+        return "(" + left.toString() + ")xnor(" + right.toString() + ")";
     }
 
     public BigDecimal compare(CalculatorNode left, CalculatorNode right) {
