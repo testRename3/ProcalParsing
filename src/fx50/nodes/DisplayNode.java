@@ -20,7 +20,7 @@ import static fx50.CalculatorHelper.Tokens.conditionIfEnd;
 public class DisplayNode extends StatementNode {
     private final PrintStream out;
 
-    public DisplayNode(CalculatorNode left, UserParserCallback parser, PrintStream out) {
+    public DisplayNode(CalculatorNode left, UserParserCallback<CalculatorNode> parser, PrintStream out) {
         super(left, parser);
         this.out = out;
     }
