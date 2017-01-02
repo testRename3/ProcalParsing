@@ -1,5 +1,6 @@
 The program list:
 
+bindis - Binomial Distribution
 combmeansd - Combined Mean and S.D.
 datediff - Date Difference
 det2 - 2x2 Determinant
@@ -18,5 +19,4 @@ stdnormdis - Standard Normal Distribution
 
 
 Pending to Fix:
-bindis - Binomial Distribution
 cubic - Cubic Equation
