@@ -1,0 +1,9 @@
+/* 2x2 Matrix Inversion */
+?->$a: ?->$b: 
+?->$c: ?->$d:
+
+$a$d - $b$c -> $det:
+$d/$det display
+-$b/$det display
+-$c/$det display
+$a/$det display
