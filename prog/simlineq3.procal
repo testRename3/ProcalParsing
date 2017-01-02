@@ -1,0 +1,19 @@
+/* Simutaneous Lineae Equations in 3 Unknowns */
+?->$a: ?->$b: ?->$c: ?->$X:
+?->$d: ?->$e: ?->$f: ?->$Y:
+?->$g: ?->$h: ?->$i: ?->$Z:
+$a$e$i + $b$f$g + $c$d$h - $c$e$g - $b$d$i - $a$f$h -> $det:
+($e$i - $f$h) / $det ->$A:
+($c$h - $b$i) / $det ->$B:
+($b$f - $c$e) / $det ->$C:
+($f$g - $d$i) / $det ->$D:
+($a$i - $c$g) / $det ->$E:
+($c$d - $a$f) / $det ->$F:
+($d$h - $e$g) / $det ->$G:
+($b$g - $a$h) / $det ->$H:
+($a$e - $b$d) / $det ->$I:
+
+$A$X + $B$Y + $C$Z display
+$D$X + $E$Y + $F$Z display
+$G$X + $H$Y + $I$Z display
+

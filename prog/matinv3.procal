@@ -1,0 +1,14 @@
+/* 3x3 Matrix Inversion */
+?->$a: ?->$b: ?->$c:
+?->$d: ?->$e: ?->$f:
+?->$g: ?->$h: ?->$i:
+$a$e$i + $b$f$g + $c$d$h - $c$e$g - $b$d$i - $a$f$h -> $det:
+($e$i - $f$h) / $det display
+($c$h - $b$i) / $det display
+($b$f - $c$e) / $det display
+($f$g - $d$i) / $det display
+($a$i - $c$g) / $det display
+($c$d - $a$f) / $det display
+($d$h - $e$g) / $det display
+($b$g - $a$h) / $det display
+($a$e - $b$d) / $det display
