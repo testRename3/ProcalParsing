@@ -20,9 +20,9 @@ public class CalcMath {
     }
 
     public static BigDecimal permutation(BigDecimal n, BigDecimal r) {
-        BigDecimal x = n.round(new MathContext(0));
-        BigDecimal y = r.round(new MathContext(0));
-        return factorial(x).multiply(factorial(x.subtract(y)));
+        n = n.round(new MathContext(0));
+        r = r.round(new MathContext(0));
+        return factorial(n).divide(factorial(n.subtract(r)), precision);
     }
 
     public static BigDecimal combination(BigDecimal n, BigDecimal r) {
