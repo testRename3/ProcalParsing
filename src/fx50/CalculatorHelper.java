@@ -285,16 +285,16 @@ public class CalculatorHelper {
         //Tokens.jumpLabel.build();
         //Tokens.jumpGoto.build();
 
-        Tokens.loopNext.leftBindingPower(2).build();
-        Tokens.loopFor.leftBindingPower(2).build();
-        Tokens.loopTo.leftBindingPower(3).build();
-        Tokens.loopStep.leftBindingPower(3).build();
-        Tokens.loopWhileEnd.leftBindingPower(2).build();
-        Tokens.loopWhile.leftBindingPower(2).build();
-        Tokens.conditionIfEnd.leftBindingPower(2).build();
-        Tokens.conditionIf.leftBindingPower(2).build();
-        Tokens.conditionThen.leftBindingPower(3).build();
-        Tokens.conditionElse.leftBindingPower(2).build();
+        Tokens.loopNext.leftBindingPower(1).build();
+        Tokens.loopFor.leftBindingPower(1).build();
+        Tokens.loopTo.leftBindingPower(2).build();
+        Tokens.loopStep.leftBindingPower(2).build();
+        Tokens.loopWhileEnd.leftBindingPower(1).build();
+        Tokens.loopWhile.leftBindingPower(1).build();
+        Tokens.conditionIfEnd.leftBindingPower(1).build();
+        Tokens.conditionIf.leftBindingPower(1).build();
+        Tokens.conditionThen.leftBindingPower(1).build();
+        Tokens.conditionElse.leftBindingPower(1).build();
 
         Tokens.shorthandIf.leftBindingPower(3).build();
         Tokens.display.leftBindingPower(3).build();
