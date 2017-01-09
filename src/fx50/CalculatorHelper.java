@@ -206,11 +206,11 @@ public class CalculatorHelper {
                 .nud((left, parser, lexeme) -> new ExponentialNode(lexeme));
 
         public static TokenDefinitionBuilder<CalculatorNode> function = b.newToken()
-                .named("function").matchesPattern("[A-Za-z][A-Za-z0-9]+(?=\\()")
+                .named("function").matchesPattern("[A-Za-z_]\\w+(?=\\()")
                 .nud(FunctionNode::new);
 
         public static TokenDefinitionBuilder<CalculatorNode> suffixFunction = b.newToken()
-                .named("suffixFunction").matchesPattern("[A-Za-z][A-Za-z0-9]+")
+                .named("suffixFunction").matchesPattern("[A-Za-z_]\\w+")
                 .led((left, parser, lexeme) -> new SuffixFunctionNode(left, parser, lexeme, out));
 
         public static TokenDefinitionBuilder<CalculatorNode> booleanNotEqual = b.newToken()
