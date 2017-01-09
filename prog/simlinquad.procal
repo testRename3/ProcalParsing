@@ -1,4 +1,5 @@
 /* Simulataneous Linear & Quadratic Equations */
+/* _x + _y = _; _x^2 + _xy + _y^2 + _x + _y + _ = 0 */
 ?->$A: ?->$B: $A/$B->$D: 
 ?->$A: $A/$B->$C:
 ?->$M: ?->$Y: ?->$X: ?->$A:

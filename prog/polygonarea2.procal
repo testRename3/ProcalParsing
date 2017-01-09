@@ -1,0 +1,14 @@
+/* Area of Polygon from Points */
+/* One must enter the points (x, y) in either clockwise or anticlockwise direction */
+/* One must also re-enter the first point as the last entry again */
+/* e.g. for triangle formed by (2, 1), (8, 4) and (3, 5) */
+/* One must enter 2, 1, 8, 4, 3, 5, 2, 1 for it to output 17 */
+0->$A: 0->$B: 0->$C: 0->$D: 0->$M: 0->$X: 0->$Y:
+While 1:
+	$M + $B$C - $A$D -> $M:
+	$A -> $C:
+	$B -> $D:
+	Abs($M/2) -> $A display
+	?->$A:
+	?->$B:
+WhileEnd:
