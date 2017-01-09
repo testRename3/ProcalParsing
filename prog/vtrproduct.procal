@@ -1,0 +1,8 @@
+/* Dot and Cross Products of 3D vectors */
+?->$a: ?->$b: ?->$c:
+?->$d: ?->$e: ?->$f:
+
+$a$d + $b$e + $c$f display
+$b$f - $c$e display
+$c$d - $a$f display
+$a$e - $b$d display
