@@ -115,7 +115,7 @@ public class Main {
                             .replaceAll("display(?!:)", "display:")
                             .replaceAll("\\s*$", "")
                             .replaceAll("(?<=[^:])$", ":")
-                            .replaceAll("((?:(?<=&|\\$)\\w*)|\\)|\\d|(?<=Ans|Ran#))(?: *)(\\(|&|\\$|Ans|Ran#|E-*\\d\\d?(?!\\d))", "$1*$2")
+                            .replaceAll("((?:(?<=&|\\$)\\w*)|\\)|\\d|(?<=Ans|Ran#))(?: *)(\\(|&|\\$|[A-za-z_]+\\(|Ans|Ran#|E-*\\d\\d?(?!\\d))", "$1*$2")
                     );
                     parsedResult = pr.getRootNode().toString();
                     if (showParseResult)
