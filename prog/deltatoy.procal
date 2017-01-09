@@ -1,5 +1,5 @@
 /* Resistors Delta to Y transformation */
-?->R1: ?->R2: ?->$R3:
+?->$R1: ?->$R2: ?->$R3:
 (&R1&R2)/($R1+&R2+&R3) display
 (&R2&R3)/($R1+&R2+&R3) display
 (&R3&R1)/($R1+&R2+&R3) display
