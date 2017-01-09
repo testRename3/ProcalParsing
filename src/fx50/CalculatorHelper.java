@@ -143,7 +143,7 @@ public class CalculatorHelper {
                 .nud((left, parser, lexeme) -> new ConstantNode(parser, lexeme));
 
         public static TokenDefinitionBuilder<CalculatorNode> number = b.newToken()
-                .named("number").matchesPattern("\\d+\\.?\\d+|\\d+\\.|\\.\\d+|\\.")
+                .named("number").matchesPattern("\\d+\\.?\\d+|\\d+\\.|\\.\\d+|\\.|\\d+")
                 .nud((left, parser, lexeme) -> new NumberNode(new BigDecimal(lexeme.getText().equals(".") ? "0": lexeme.getText())));
 
         public static TokenDefinitionBuilder<CalculatorNode> percent = b.newToken()
