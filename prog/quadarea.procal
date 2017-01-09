@@ -1,0 +1,5 @@
+/* Quadraterlal Area */
+?->$A: ?->$B: ?->$C: ?->$D: ?->$X: /* $X is the combined opposite angles */
+$X / 360 * 2&pi -> $X:
+.5($A + $B + $C + $D):
+sqrt((Ans-$A)(Ans-$B)(Ans-$C)(Ans-$D) - cos(.5$X) * cos(.5$X) * $A$B$C$D)
