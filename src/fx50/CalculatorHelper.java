@@ -334,9 +334,6 @@ public class CalculatorHelper {
         Tokens.divide.leftBindingPower(10).build();
         Tokens.modulo.leftBindingPower(10).build();
 
-        Tokens.permutation.leftBindingPower(11).build();
-        Tokens.combination.leftBindingPower(11).build();
-
         Tokens.factorial.leftBindingPower(14).build();
         Tokens.power.leftBindingPower(14).build();
         Tokens.root.leftBindingPower(14).build();
@@ -349,6 +346,9 @@ public class CalculatorHelper {
         Tokens.function.leftBindingPower(10).build();
         Tokens.suffixFunction.leftBindingPower(15).build();
         Tokens.percent.leftBindingPower(15).build();
+
+        Tokens.permutation.leftBindingPower(11).build();
+        Tokens.combination.leftBindingPower(11).build();
 
         Tokens.number.leftBindingPower(10).build();
         Tokens.variable.leftBindingPower(10).build();
