@@ -3,6 +3,9 @@ package fx50.CalcMath;
 import org.nevec.rjm.BigDecimalMath;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.math.MathContext;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 
 /**
@@ -63,12 +66,33 @@ public class Fn {
     }
 
     public static BigDecimal asin(ArrayList<BigDecimal> bigDecimals) {
-        return BigDecimalMath.asin(bigDecimals.get(0).setScale(200, BigDecimal.ROUND_HALF_UP)).setScale(15, BigDecimal.ROUND_HALF_UP);
+        //return BigDecimalMath.asin(bigDecimals.get(0).setScale(300, BigDecimal.ROUND_HALF_UP)).setScale(15, BigDecimal.ROUND_HALF_UP);
+        //asin(x) = 2 * atan(x/(1+sqrt(1-x^2)))
+        BigDecimal x = bigDecimals.get(0).setScale(200, BigDecimal.ROUND_HALF_UP);
+        BigDecimal y;
+        BigDecimal a = BigDecimal.ONE.subtract(x.multiply(x)).setScale(200, BigDecimal.ROUND_HALF_UP);
+        if (a.compareTo(BigDecimal.ZERO) == 0){
+            y = BigDecimal.ONE;
+        } else {
+            y = BigDecimal.ONE.add(BigDecimalMath.sqrt(a));
+        }
+        return (BigDecimal.ONE.add(BigDecimal.ONE)).multiply(BigDecimalMath.atan(x.divide(y, CalcMath.precision)));
     }
 
     public static BigDecimal acos(ArrayList<BigDecimal> bigDecimals) {
-        return BigDecimalMath.acos(bigDecimals.get(0).setScale(200, BigDecimal.ROUND_HALF_UP)).setScale(15, BigDecimal.ROUND_HALF_UP);
-    }
+        //return BigDecimalMath.acos(bigDecimals.get(0).setScale(300, BigDecimal.ROUND_HALF_UP)).setScale(15, BigDecimal.ROUND_HALF_UP);
+        //acos(x) =  2 * atan(sqrt(1-x^2) / (1+x))
+        BigDecimal x = bigDecimals.get(0).setScale(200, BigDecimal.ROUND_HALF_UP);
+        BigDecimal a = BigDecimal.ONE.subtract(x.multiply(x)).setScale(200, BigDecimal.ROUND_HALF_UP);
+        if (x.compareTo(BigDecimal.ZERO.subtract(BigDecimal.ONE)) == 0){
+            return  BigDecimalMath.pi(new MathContext(20));
+        }
+        if (a.compareTo(BigDecimal.ZERO) == 0){
+            return BigDecimal.ZERO;
+        } else {
+            return (BigDecimal.ONE.add(BigDecimal.ONE)).multiply(BigDecimalMath.atan(BigDecimalMath.sqrt(a).divide(BigDecimal.ONE.add(x), new MathContext(200, RoundingMode.HALF_UP)).setScale(200, BigDecimal.ROUND_HALF_UP)));
+        }
+     }
 
     public static BigDecimal atan(ArrayList<BigDecimal> bigDecimals) {
         return BigDecimalMath.atan(bigDecimals.get(0).setScale(15, BigDecimal.ROUND_HALF_UP));

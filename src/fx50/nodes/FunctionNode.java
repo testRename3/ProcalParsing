@@ -73,7 +73,7 @@ public class FunctionNode implements CalculatorNode {
             result = (BigDecimal) method.invoke(this, args);
         } catch (IllegalArgumentException e) {throw new RuntimeException("Runtime Error: IllegalArgumentException");}
         catch (IllegalAccessException e) {throw new RuntimeException("Runtime Error: IllegalAccessException");}
-        catch (InvocationTargetException e) {throw new ArithmeticException("Math Error");}
+        catch (InvocationTargetException e) {e.printStackTrace(System.out); throw new ArithmeticException("Math Error");}
 
         return result;
     }
