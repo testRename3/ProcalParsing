@@ -1,0 +1,6 @@
+/* Tangent to Circle with Given Slope */
+?->$A: ?->$B: ?->$C: ?->$D: /* coeff of x, coeff of y, constant term, slope */
+$D$A-$B -> $X:
+4$C(1+$D^2) - ($A + $B$D)^2 -> $Y:
+0.5($X + sqrt($X^2 - $Y)) display /* first y-int */
+$X - Ans /* second y-int */

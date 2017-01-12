@@ -1,0 +1,13 @@
+/* Center, Radius and Equation of Circle from 3 given points */
+?->$A: ?->$B: ?->$X: ?->$Y: 
+($X-$A)/($B-$Y) -> $C:
+0.5($B+$Y-$C($A+$X)) -> $D:
+?->$X: ?->$Y:
+($X-$A)/($B-$Y) -> $M:
+0.5($B+$Y-$M($A+$X)) -> $Y:
+($Y-$D)/($C-$M) -> $C display /* x coord of center */
+$M$C + $Y -> $D display /* y coord of center */
+sqrt(($A - $C)^2 + ($B - $D)^2) display /* radius */
+-2$C display /* coeff of x */
+-2$D display /* coeff of y */
+$C^2 + $D^2 - (($A - $C)^2 + ($B - $D)^2) display /* constant term */
