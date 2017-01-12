@@ -38,6 +38,25 @@ public class CalcMath {
         return (n.setScale(0, BigDecimal.ROUND_DOWN)).equals(n);
     }
 
+    public static BigDecimal simpleHCF (BigDecimal a, BigDecimal b) {
+        BigDecimal c = BigDecimal.ONE;
+        if (a.compareTo(b) == -1) {
+            c = a;
+            a = b;
+            b = c;
+        }
+        while (c.compareTo(BigDecimal.ZERO) != 0) {
+            c = a.remainder(b);
+            a = b;
+            b = c;
+        }
+        return a;
+    }
+
+    public static BigDecimal simpleLCM (BigDecimal a, BigDecimal b) {
+        return a.multiply(b).divide(CalcMath.simpleHCF(a, b), new MathContext(200, RoundingMode.HALF_UP));
+    }
+
     public static void listAllConstants() {
         for (Constants c: Constants.values()) {
             int indentation = 12;
