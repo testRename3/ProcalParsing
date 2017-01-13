@@ -7,12 +7,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9b0670b7-d42a-48d8-9b22-dba5ef445803" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/fx50/CalcMath/BigFraction.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/artifacts/Fx50_jar/Fx50.jar" afterPath="$PROJECT_DIR$/out/artifacts/Fx50_jar/Fx50.jar" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Fx50.iml" afterPath="$PROJECT_DIR$/Fx50.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/fx50/CalcMath/Fn.java" afterPath="$PROJECT_DIR$/src/fx50/CalcMath/Fn.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/fx50/nodes/PowerNode.java" afterPath="$PROJECT_DIR$/src/fx50/nodes/PowerNode.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/fx50/CalcMath/BigFraction.java" afterPath="$PROJECT_DIR$/src/fx50/CalcMath/BigFraction.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -39,18 +35,18 @@
           <file leaf-file-name="Fn.java" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/src/fx50/CalcMath/Fn.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="170">
-                  <caret line="100" column="70" lean-forward="false" selection-start-line="100" selection-start-column="70" selection-end-line="100" selection-end-column="70" />
+                <state relative-caret-position="221">
+                  <caret line="101" column="70" lean-forward="false" selection-start-line="101" selection-start-column="70" selection-end-line="101" selection-end-column="70" />
                   <folding />
                 </state>
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="BigFraction.java" pinned="false" current-in-tab="false">
+          <file leaf-file-name="BigFraction.java" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/src/fx50/CalcMath/BigFraction.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="326">
-                  <caret line="81" column="9" lean-forward="false" selection-start-line="81" selection-start-column="9" selection-end-line="81" selection-end-column="9" />
+                <state relative-caret-position="394">
+                  <caret line="78" column="54" lean-forward="true" selection-start-line="78" selection-start-column="54" selection-end-line="78" selection-end-column="54" />
                   <folding>
                     <element signature="imports" expanded="true" />
                   </folding>
@@ -58,11 +54,11 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="PowerNode.java" pinned="false" current-in-tab="true">
+          <file leaf-file-name="PowerNode.java" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/src/fx50/nodes/PowerNode.java">
               <provider selected="true" editor-type-id="text-editor">
                 <state relative-caret-position="227">
-                  <caret line="19" column="34" lean-forward="true" selection-start-line="19" selection-start-column="34" selection-end-line="19" selection-end-column="34" />
+                  <caret line="19" column="34" lean-forward="false" selection-start-line="19" selection-start-column="34" selection-end-line="19" selection-end-column="34" />
                   <folding />
                 </state>
               </provider>
@@ -73,7 +69,9 @@
               <provider selected="true" editor-type-id="text-editor">
                 <state relative-caret-position="136">
                   <caret line="10" column="89" lean-forward="false" selection-start-line="10" selection-start-column="48" selection-end-line="10" selection-end-column="89" />
-                  <folding />
+                  <folding>
+                    <marker date="1484318123466" expanded="true" signature="1947:2394" ph="{...}" />
+                  </folding>
                 </state>
               </provider>
             </entry>
@@ -220,8 +218,8 @@
         <option value="$PROJECT_DIR$/src/fx50/nodes/FunctionNode.java" />
         <option value="$PROJECT_DIR$/dectofrac_manual.py" />
         <option value="$PROJECT_DIR$/src/fx50/CalcMath/Fn.java" />
-        <option value="$PROJECT_DIR$/src/fx50/CalcMath/BigFraction.java" />
         <option value="$PROJECT_DIR$/src/fx50/nodes/PowerNode.java" />
+        <option value="$PROJECT_DIR$/src/fx50/CalcMath/BigFraction.java" />
       </list>
     </option>
   </component>
@@ -835,7 +833,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32842582" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -1223,19 +1221,9 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/fx50/CalcMath/Fn.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="100" column="70" lean-forward="false" selection-start-line="100" selection-start-column="70" selection-end-line="100" selection-end-column="70" />
+        <state relative-caret-position="221">
+          <caret line="101" column="70" lean-forward="false" selection-start-line="101" selection-start-column="70" selection-end-line="101" selection-end-column="70" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/fx50/CalcMath/BigFraction.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="326">
-          <caret line="81" column="9" lean-forward="false" selection-start-line="81" selection-start-column="9" selection-end-line="81" selection-end-column="9" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1243,15 +1231,27 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="136">
           <caret line="10" column="89" lean-forward="false" selection-start-line="10" selection-start-column="48" selection-end-line="10" selection-end-column="89" />
-          <folding />
+          <folding>
+            <marker date="1484318123466" expanded="true" signature="1947:2394" ph="{...}" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/fx50/nodes/PowerNode.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="227">
-          <caret line="19" column="34" lean-forward="true" selection-start-line="19" selection-start-column="34" selection-end-line="19" selection-end-column="34" />
+          <caret line="19" column="34" lean-forward="false" selection-start-line="19" selection-start-column="34" selection-end-line="19" selection-end-column="34" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/fx50/CalcMath/BigFraction.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="394">
+          <caret line="78" column="54" lean-forward="true" selection-start-line="78" selection-start-column="54" selection-end-line="78" selection-end-column="54" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

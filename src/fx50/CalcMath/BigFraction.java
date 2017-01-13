@@ -80,6 +80,11 @@ public class BigFraction{
             this.numerator = new BigDecimal(numerator / factor);
             this.denominator = new BigDecimal(denominator / factor);
         }
+
+        if (this.numerator.compareTo(BigDecimal.ZERO) < 0){
+            this.numerator.negate();
+            this.denominator.negate();
+        }
     }
 
     public BigDecimal Numerator(){
