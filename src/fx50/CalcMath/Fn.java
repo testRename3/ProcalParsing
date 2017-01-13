@@ -7,6 +7,7 @@ import java.math.BigInteger;
 import java.math.MathContext;
 import java.math.RoundingMode;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Fn
@@ -138,6 +139,31 @@ public class Fn {
 
     public static BigDecimal ln(ArrayList<BigDecimal> bigDecimals) {
         return BigDecimalMath.log(bigDecimals.get(0).setScale(16, BigDecimal.ROUND_HALF_UP)).setScale(15, BigDecimal.ROUND_HALF_UP);
+    }
+
+    public static BigDecimal HCF(ArrayList<BigDecimal> bigDecimals) {
+        if (bigDecimals.size() == 1)
+            return bigDecimals.get(0);
+        if (bigDecimals.size() == 2)
+            return CalcMath.simpleHCF(bigDecimals.get(0), bigDecimals.get(1));
+        int halfSize = (bigDecimals.size()-1)/2;
+        return CalcMath.simpleHCF(
+                HCF(new ArrayList<>(bigDecimals.subList(0, halfSize))),
+                HCF(new ArrayList<>(bigDecimals.subList(halfSize, bigDecimals.size())))
+        );
+    }
+
+    public static BigDecimal LCM(ArrayList<BigDecimal> bigDecimals) {
+        System.out.println(bigDecimals);
+        if (bigDecimals.size() == 1)
+            return bigDecimals.get(0);
+        if (bigDecimals.size() == 2)
+            return CalcMath.simpleLCM(bigDecimals.get(0), bigDecimals.get(1));
+        int halfSize = (bigDecimals.size()-1)/2;
+        return CalcMath.simpleLCM(
+                LCM(new ArrayList<>(bigDecimals.subList(0, halfSize))),
+                LCM(new ArrayList<>(bigDecimals.subList(halfSize, bigDecimals.size())))
+        );
     }
 
 }
