@@ -7,7 +7,7 @@
       <excludeFolder url="file://$MODULE_DIR$/jars" />
       <excludeFolder url="file://$MODULE_DIR$/old" />
     </content>
-    <orderEntry type="inheritedJdk" />
+    <orderEntry type="jdk" jdkName="1.8" jdkType="JavaSDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="org.jetbrains:annotations-java5:15.0" level="project" />
     <orderEntry type="library" name="rjm" level="project" />
