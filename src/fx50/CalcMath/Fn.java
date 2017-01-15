@@ -1,5 +1,6 @@
 package fx50.CalcMath;
 
+import fx50.CalculatorHelper;
 import org.nevec.rjm.BigDecimalMath;
 
 import java.math.BigDecimal;
@@ -8,6 +9,8 @@ import java.math.MathContext;
 import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
+
+import static fx50.CalculatorHelper.*;
 
 /**
  * Fn
@@ -154,7 +157,6 @@ public class Fn {
     }
 
     public static BigDecimal LCM(ArrayList<BigDecimal> bigDecimals) {
-        System.out.println(bigDecimals);
         if (bigDecimals.size() == 1)
             return bigDecimals.get(0);
         if (bigDecimals.size() == 2)
@@ -164,6 +166,38 @@ public class Fn {
                 LCM(new ArrayList<>(bigDecimals.subList(0, halfSize))),
                 LCM(new ArrayList<>(bigDecimals.subList(halfSize, bigDecimals.size())))
         );
+    }
+
+    public static BigDecimal Pol(ArrayList<BigDecimal> bigDecimals) {
+        if (bigDecimals.size() < 2)
+            throw new ArithmeticException("Pol() function requires 2 parameters: x, y");
+        BigDecimal x = bigDecimals.get(0);
+        BigDecimal y = bigDecimals.get(1);
+        ArrayList<BigDecimal> sqrtArray = new ArrayList<>();
+        sqrtArray.add(x.pow(2).add(y.pow(2)));
+        BigDecimal r = sqrt(sqrtArray);
+        ArrayList<BigDecimal> atanArray = new ArrayList<>();
+        atanArray.add(x.divide(y, new MathContext(200, RoundingMode.HALF_UP)));
+        BigDecimal theta = atan(atanArray);
+        VariableMap.setValue("X", r);
+        VariableMap.setValue("Y", theta);
+        return r;
+    }
+
+    public static BigDecimal Rec(ArrayList<BigDecimal> bigDecimals) {
+        if (bigDecimals.size() < 2)
+            throw new ArithmeticException("Rec() function requires 2 parameters: r, theta");
+        BigDecimal r = bigDecimals.get(0);
+        BigDecimal theta = bigDecimals.get(1);
+        ArrayList<BigDecimal> sinArray = new ArrayList<>();
+        sinArray.add(theta);
+        BigDecimal x = sin(sinArray).multiply(r);
+        ArrayList<BigDecimal> cosArray = new ArrayList<>();
+        cosArray.add(theta);
+        BigDecimal y = cos(cosArray).multiply(r);
+        VariableMap.setValue("X", x);
+        VariableMap.setValue("Y", y);
+        return x;
     }
 
 }
