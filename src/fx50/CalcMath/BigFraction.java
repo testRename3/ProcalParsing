@@ -115,6 +115,10 @@ public class BigFraction{
         }
     }
 
+    public BigDecimal toDecimal(){
+        return this.numerator.divide(this.denominator);
+    }
+
     public BigFraction add(BigFraction frac){
         return (new BigFraction(this.numerator.multiply(frac.denominator).add(frac.numerator.multiply(this.denominator)),
                 this.denominator.multiply(frac.denominator))).simplify();
@@ -132,9 +136,8 @@ public class BigFraction{
         return this.multiply(frac.inverse());
     }
 
-    public BigFraction pow(BigDecimal exp){
-        int e = exp.intValueExact(); //e must be int
-        return (new BigFraction(this.numerator.pow(e), this.denominator.pow(e)));
+    public BigDecimal pow(BigDecimal exp){
+        return BigDecimalMath.pow(this.toDecimal().setScale(15, BigDecimal.ROUND_HALF_UP), exp.setScale(15, BigDecimal.ROUND_HALF_UP));
     }
 
     public String toImproperString(){
