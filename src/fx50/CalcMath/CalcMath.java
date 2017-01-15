@@ -35,7 +35,8 @@ public class CalcMath {
     }
 
     public static boolean isInt (BigDecimal n) {
-        return (n.setScale(0, BigDecimal.ROUND_DOWN)).equals(n);
+        return n.setScale(0, RoundingMode.HALF_UP).compareTo(n) == 0;
+        //return (n.setScale(0, BigDecimal.ROUND_DOWN)).equals(n);
     }
 
     public static BigDecimal simpleHCF (BigDecimal a, BigDecimal b) {
