@@ -53,8 +53,27 @@ public class CalcMath {
         return a;
     }
 
+    public static long simpleHCF (long a, long b) {
+        long c = 1;
+        if (a < b) {
+            c = a;
+            a = b;
+            b = c;
+        }
+        while (c != 0) {
+            c = a % b;
+            a = b;
+            b = c;
+        }
+        return a;
+    }
+
     public static BigDecimal simpleLCM (BigDecimal a, BigDecimal b) {
         return a.multiply(b).divide(CalcMath.simpleHCF(a, b), new MathContext(200, RoundingMode.HALF_UP));
+    }
+
+    public static long simpleLCM (long a, long b) {
+        return a*b/CalcMath.simpleHCF(a, b);
     }
 
     public static void listAllConstants() {

@@ -5,6 +5,8 @@ import java.math.MathContext;
 import java.math.RoundingMode;
 import java.util.ArrayList;
 
+import static fx50.CalcMath.CalcMath.simpleHCF;
+
 /**
  * BigFraction
  */
@@ -28,16 +30,6 @@ public class BigFraction{
 
         }
     }
-
-    private long hcf(long a, long b){
-        while (b != 0){
-            long t = b;
-            b = a%b;
-            a = t;
-        }
-        return a;
-    }
-
 
     public BigFraction(int numerator, int denominator){
         if (denominator == 0){
@@ -76,14 +68,14 @@ public class BigFraction{
             int exp = decimal.scale();
             numerator = decimal.multiply(new BigDecimal(Math.pow(10, exp))).intValue();
             denominator = (int) (Math.pow(10, exp));
-            long factor = hcf(numerator, denominator);
+            long factor = simpleHCF(numerator, denominator);
             this.numerator = new BigDecimal(numerator / factor);
             this.denominator = new BigDecimal(denominator / factor);
         }
 
         if (this.numerator.compareTo(BigDecimal.ZERO) < 0){
-            this.numerator.negate();
-            this.denominator.negate();
+            this.numerator = this.numerator.negate();
+            this.denominator = this.denominator.negate();
         }
     }
 
