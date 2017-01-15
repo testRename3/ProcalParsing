@@ -1,6 +1,9 @@
 package fx50.nodes;
 
 import fx50.CalcMath.Fn;
+import fx50.CalculatorHelper;
+import org.bychan.core.basic.Lexeme;
+import org.bychan.core.dynamic.UserParserCallback;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -10,7 +13,7 @@ import java.util.ArrayList;
  */
 public class RandomNumberNode implements CalculatorNode {
 
-    public RandomNumberNode() {}
+    public RandomNumberNode(CalculatorNode left, UserParserCallback<CalculatorNode> parser, Lexeme lexeme) {}
 
     public BigDecimal evaluate() {
         ArrayList<BigDecimal> args = new ArrayList<>();
