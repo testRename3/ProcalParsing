@@ -11,6 +11,8 @@ import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 
+import static fx50.CalcMath.CalcMath.isInt;
+
 /**
  * CalculatorHelper
  */
@@ -132,7 +134,7 @@ public class CalculatorHelper {
 
         public static TokenDefinitionBuilder<CalculatorNode> randomNumber = b.newToken()
                 .named("randomNumber").matchesString("Ran#")
-                .nud((left, parser, lexeme) -> new RandomNumberNode());
+                .nud(RandomNumberNode::new);
 
         public static TokenDefinitionBuilder<CalculatorNode> variable = b.newToken()
                 .named("variable").matchesPattern("\\$[A-Za-z_][A-Za-z_0-9]*")
@@ -140,11 +142,14 @@ public class CalculatorHelper {
 
         public static TokenDefinitionBuilder<CalculatorNode> constant = b.newToken()
                 .named("constant").matchesPattern("&[A-Za-z_][A-Za-z_0-9]*")
-                .nud((left, parser, lexeme) -> new ConstantNode(parser, lexeme));
+                .nud(ConstantNode::new);
 
         public static TokenDefinitionBuilder<CalculatorNode> number = b.newToken()
                 .named("number").matchesPattern("\\d+\\.?\\d+|\\d+\\.|\\.\\d+|\\.|\\d+")
-                .nud((left, parser, lexeme) -> new NumberNode(new BigDecimal(lexeme.getText().equals(".") ? "0": lexeme.getText())));
+                .nud((left, parser, lexeme) -> {
+                    BigDecimal number = new BigDecimal(lexeme.getText().equals(".") ? "0": lexeme.getText());
+                    return new NumberNode(number);
+                });
 
         public static TokenDefinitionBuilder<CalculatorNode> percent = b.newToken()
                 .named("percent").matchesString("%")

@@ -3,6 +3,7 @@ package fx50.nodes;
 import fx50.CalcMath.CalcMath;
 
 import java.math.BigDecimal;
+
 /**
  * Division Node
  */
