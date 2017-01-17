@@ -1,9 +1,11 @@
 package fx50.nodes;
 
+import fx50.API.InputToken;
 import fx50.CalcMath.BigFraction;
 import org.nevec.rjm.BigDecimalMath;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 /**
  * Power Node
@@ -48,5 +50,13 @@ public class PowerNode implements CalculatorNode {
 
     public String toString() {
         return "(" + left.toString() + "^" + right.toString() + ")";
+    }
+
+    public List<InputToken> toInputTokens() {
+        List<InputToken> resultTokens = left.toInputTokens();
+        resultTokens.add(new InputToken("^(", "^("));
+        resultTokens.addAll(right.toInputTokens());
+        resultTokens.add(new InputToken(")", ")"));
+        return resultTokens;
     }
 }

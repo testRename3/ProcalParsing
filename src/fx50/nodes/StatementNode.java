@@ -1,10 +1,12 @@
 package fx50.nodes;
 
+import fx50.API.InputToken;
 import fx50.CalculatorHelper;
 import org.bychan.core.basic.EndToken;
 import org.bychan.core.dynamic.UserParserCallback;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 import static fx50.CalculatorHelper.Tokens.*;
 import static fx50.ParsingHelper.nextIsStatementEnd;
@@ -39,5 +41,14 @@ public class StatementNode implements CalculatorNode {
             return left.toString() + ":\n" + right.toString();
         else
             return left.toString() + ":";
+    }
+
+    public List<InputToken> toInputTokens() {
+        List<InputToken> resultTokens = left.toInputTokens();
+        resultTokens.add(new InputToken(":", ":"));
+        if (!isLast) {
+            resultTokens.addAll(right.toInputTokens());
+        }
+        return resultTokens;
     }
 }

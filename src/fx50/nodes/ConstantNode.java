@@ -8,6 +8,7 @@ import org.bychan.core.dynamic.UserParserCallback;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -28,6 +29,6 @@ public class ConstantNode extends NumberNode {
     }
 
     public List<InputToken> toInputTokens() {
-        return new ArrayList<>(Arrays.asList(new InputToken("&"+constantName, Constants.valueOf(constantName).getDisplay())));
+        return new ArrayList<>(Collections.singletonList(new InputToken("&" + constantName, Constants.valueOf(constantName).getDisplay())));
     }
 }

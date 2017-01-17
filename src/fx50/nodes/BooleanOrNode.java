@@ -26,10 +26,10 @@ public class BooleanOrNode implements BooleanNode {
     }
 
     public List<InputToken> toInputTokens() {
-        List<InputToken> leftTokens = left.toInputTokens();
-        leftTokens.add(new InputToken("or", "OR"));
-        leftTokens.addAll(right.toInputTokens());
-        return leftTokens;
+        List<InputToken> resultTokens = left.toInputTokens();
+        resultTokens.add(new InputToken("or", "OR"));
+        resultTokens.addAll(right.toInputTokens());
+        return resultTokens;
     }
 
     public BigDecimal compare(CalculatorNode left, CalculatorNode right) {

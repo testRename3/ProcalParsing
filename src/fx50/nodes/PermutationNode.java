@@ -1,8 +1,10 @@
 package fx50.nodes;
 
+import fx50.API.InputToken;
 import fx50.CalcMath.CalcMath;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 /**
  * Permutation Node
@@ -29,5 +31,12 @@ public class PermutationNode implements CalculatorNode {
 
     public String toString() {
         return "(" + left.toString() + "P" + right.toString() + ")";
+    }
+
+    public List<InputToken> toInputTokens() {
+        List<InputToken> resultTokens = left.toInputTokens();
+        resultTokens.add(new InputToken("P", "ℙ"));
+        resultTokens.addAll(right.toInputTokens());
+        return resultTokens;
     }
 }

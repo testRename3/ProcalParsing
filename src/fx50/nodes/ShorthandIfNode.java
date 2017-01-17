@@ -1,10 +1,12 @@
 package fx50.nodes;
 
 
+import fx50.API.InputToken;
 import org.bychan.core.basic.EndToken;
 import org.bychan.core.dynamic.UserParserCallback;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 import static fx50.CalculatorHelper.Tokens.*;
 
@@ -29,5 +31,12 @@ public class ShorthandIfNode implements CalculatorNode {
 
     public String toString() {
         return ifNode.toString() + "=>(" + thenNode.toString() + ")";
+    }
+
+    public List<InputToken> toInputTokens() {
+        List<InputToken> resultTokens = ifNode.toInputTokens();
+        resultTokens.add(new InputToken("=>", "⇒"));
+        resultTokens.addAll(thenNode.toInputTokens());
+        return resultTokens;
     }
 }

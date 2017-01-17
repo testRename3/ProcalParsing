@@ -26,10 +26,10 @@ public class BooleanXnorNode implements BooleanNode {
     }
 
     public List<InputToken> toInputTokens() {
-        List<InputToken> leftTokens = left.toInputTokens();
-        leftTokens.add(new InputToken("xnor", "XNOR"));
-        leftTokens.addAll(right.toInputTokens());
-        return leftTokens;
+        List<InputToken> resultTokens = left.toInputTokens();
+        resultTokens.add(new InputToken("xnor", "XNOR"));
+        resultTokens.addAll(right.toInputTokens());
+        return resultTokens;
     }
 
     public BigDecimal compare(CalculatorNode left, CalculatorNode right) {

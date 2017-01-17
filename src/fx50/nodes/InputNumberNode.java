@@ -1,8 +1,13 @@
 package fx50.nodes;
 
+import fx50.API.InputToken;
+
 import java.io.InputStream;
 import java.io.PrintStream;
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -27,5 +32,10 @@ public class InputNumberNode implements CalculatorNode {
 
     public String toString() {
         return "?";
+    }
+
+    public List<InputToken> toInputTokens() {
+        List<InputToken> resultTokens = new ArrayList<>(Collections.singletonList(new InputToken("?", "?")));
+        return resultTokens;
     }
 }

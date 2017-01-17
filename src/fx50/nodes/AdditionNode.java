@@ -26,9 +26,9 @@ public class AdditionNode implements CalculatorNode {
     }
 
     public List<InputToken> toInputTokens() {
-        List<InputToken> leftTokens = left.toInputTokens();
-        leftTokens.add(new InputToken("+", "+"));
-        leftTokens.addAll(right.toInputTokens());
-        return leftTokens;
+        List<InputToken> resultTokens = left.toInputTokens();
+        resultTokens.add(new InputToken("+", "+"));
+        resultTokens.addAll(right.toInputTokens());
+        return resultTokens;
     }
 }

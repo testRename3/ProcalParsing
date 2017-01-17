@@ -1,9 +1,13 @@
 package fx50.nodes;
 
+import fx50.API.InputToken;
 import org.bychan.core.basic.Lexeme;
 import org.bychan.core.dynamic.UserParserCallback;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import static fx50.CalculatorHelper.VariableMap;
 import static fx50.CalculatorHelper.Tokens.*;
@@ -68,5 +72,22 @@ public class ForLoopNode implements CalculatorNode {
                 (stepNode == null ? "" : " Step " + stepNode.toString()) + ":\n" +
                 indent(doNode.toString()) +
                 "\nNext";
+    }
+
+    public List<InputToken> toInputTokens() {
+        List<InputToken> resultTokens = new ArrayList<>(Collections.singletonList(new InputToken("For", "For ")));
+        resultTokens.addAll(initNode.toInputTokens());
+        resultTokens.add(new InputToken("->", "→"));
+        resultTokens.addAll(controlVariable.toInputTokens());
+        resultTokens.add(new InputToken("To", "To "));
+        resultTokens.addAll(toNode.toInputTokens());
+        if (stepNode != null) {
+            resultTokens.add(new InputToken("Step", "Step "));
+            resultTokens.addAll(stepNode.toInputTokens());
+        }
+        resultTokens.add(new InputToken(":", ":"));
+        resultTokens.addAll(doNode.toInputTokens());
+        resultTokens.add(new InputToken("Next", "Next"));
+        return resultTokens;
     }
 }

@@ -1,9 +1,13 @@
 package fx50.nodes;
 
+import fx50.API.InputToken;
 import org.bychan.core.basic.Lexeme;
 import org.bychan.core.dynamic.UserParserCallback;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import static fx50.CalculatorHelper.VariableMap;
 import static fx50.ParsingHelper.nextMustBeSeparator;
@@ -32,5 +36,12 @@ public class GotoNode implements CalculatorNode {
 
     public String toString() {
         return "Goto " + label + ":";
+    }
+
+    public List<InputToken> toInputTokens() {
+        List<InputToken> resultTokens = new ArrayList<>(Collections.singletonList(new InputToken("Goto ", "Goto")));
+        resultTokens.add(new InputToken(label, label));
+        resultTokens.add(new InputToken(":", ":"));
+        return resultTokens;
     }
 }

@@ -1,6 +1,8 @@
 package fx50.nodes;
 
+import fx50.API.InputToken;
 import fx50.CalcMath.SuffixFn;
+import jdk.internal.util.xml.impl.Input;
 import org.bychan.core.basic.Lexeme;
 import org.bychan.core.dynamic.UserParserCallback;
 
@@ -9,6 +11,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Suffix Function Node
@@ -62,5 +65,25 @@ public class SuffixFunctionNode implements CalculatorNode {
 
     public String toString() {
         return "((" + left + ")" + functionName + ")";
+    }
+
+    public List<InputToken> toInputTokens() {
+        List<InputToken> resultTokens = left.toInputTokens();
+        InputToken suffixFunctionToken;
+        switch (functionName) {
+            case "squared":
+                suffixFunctionToken = new InputToken("squared", "²");
+                break;
+            case "cubed":
+                suffixFunctionToken = new InputToken("cubed", "³");
+                break;
+            case "inverse":
+                suffixFunctionToken = new InputToken("inverse", "º");
+                break;
+            default:
+                suffixFunctionToken = new InputToken(functionName, functionName);
+        }
+        resultTokens.add(suffixFunctionToken);
+        return resultTokens;
     }
 }

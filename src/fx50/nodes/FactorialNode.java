@@ -1,9 +1,13 @@
 package fx50.nodes;
 
+import fx50.API.InputToken;
 import fx50.CalcMath.CalcMath;
 
 import java.io.PrintStream;
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * Factorial Node
@@ -28,5 +32,9 @@ public class FactorialNode implements CalculatorNode {
 
     public String toString() {
         return "(" + left.toString() + "!)";
+    }
+
+    public List<InputToken> toInputTokens() {
+        return new ArrayList<>(Collections.singletonList(new InputToken("!", "!")));
     }
 }
