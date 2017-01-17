@@ -1,6 +1,9 @@
 package fx50.nodes;
 
+import fx50.API.InputToken;
+
 import java.math.BigDecimal;
+import java.util.List;
 
 /**
  * Boolean And Node
@@ -20,6 +23,13 @@ public class BooleanAndNode implements BooleanNode {
 
     public String toString() {
         return "(" + left.toString() + ")and(" + right.toString() + ")";
+    }
+
+    public List<InputToken> toInputTokens() {
+        List<InputToken> leftTokens = left.toInputTokens();
+        leftTokens.add(new InputToken("and", "AND"));
+        leftTokens.addAll(right.toInputTokens());
+        return leftTokens;
     }
 
     public BigDecimal compare(CalculatorNode left, CalculatorNode right) {

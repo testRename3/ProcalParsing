@@ -3,13 +3,23 @@ package fx50.CalcMath;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
-import java.util.ArrayList;
 
+/**
+ * This class stores a Big Decimal for value evaluation and contains a fraction state with fraction methods
+ */
 public class BigNumber{
 
     private BigDecimal decimalVal;
     private BigFraction fractionVal;
     private boolean isFractionState = true;
+
+    BigNumber (String in) {
+        decimalVal = new BigDecimal(in);
+    }
+
+    BigNumber (int in) {
+        decimalVal = new BigDecimal(in);
+    }
 
     private BigDecimal convertFromFractionString(String string) {
         if (string.matches("(\\d+ *over *){1,2}\\d+")) {

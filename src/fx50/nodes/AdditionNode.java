@@ -1,6 +1,9 @@
 package fx50.nodes;
 
+import fx50.API.InputToken;
+
 import java.math.BigDecimal;
+import java.util.List;
 
 /**
  * Addition Node
@@ -20,5 +23,12 @@ public class AdditionNode implements CalculatorNode {
 
     public String toString() {
         return "(" + left.toString() + "+" + right.toString() + ")";
+    }
+
+    public List<InputToken> toInputTokens() {
+        List<InputToken> leftTokens = left.toInputTokens();
+        leftTokens.add(new InputToken("+", "+"));
+        leftTokens.addAll(right.toInputTokens());
+        return leftTokens;
     }
 }

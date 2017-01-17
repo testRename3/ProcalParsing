@@ -1,6 +1,9 @@
 package fx50.nodes;
 
+import fx50.API.InputToken;
+
 import java.math.BigDecimal;
+import java.util.List;
 
 /**
  * Boolean Or Node
@@ -20,6 +23,13 @@ public class BooleanOrNode implements BooleanNode {
 
     public String toString() {
         return "(" + left.toString() + ")or(" + right.toString() + ")";
+    }
+
+    public List<InputToken> toInputTokens() {
+        List<InputToken> leftTokens = left.toInputTokens();
+        leftTokens.add(new InputToken("or", "OR"));
+        leftTokens.addAll(right.toInputTokens());
+        return leftTokens;
     }
 
     public BigDecimal compare(CalculatorNode left, CalculatorNode right) {

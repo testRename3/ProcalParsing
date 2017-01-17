@@ -1,6 +1,9 @@
 package fx50.nodes;
 
+import fx50.API.InputToken;
+
 import java.math.BigDecimal;
+import java.util.List;
 
 /**
  * Boolean Xnor Node
@@ -20,6 +23,13 @@ public class BooleanXnorNode implements BooleanNode {
 
     public String toString() {
         return "(" + left.toString() + ")xnor(" + right.toString() + ")";
+    }
+
+    public List<InputToken> toInputTokens() {
+        List<InputToken> leftTokens = left.toInputTokens();
+        leftTokens.add(new InputToken("xnor", "XNOR"));
+        leftTokens.addAll(right.toInputTokens());
+        return leftTokens;
     }
 
     public BigDecimal compare(CalculatorNode left, CalculatorNode right) {

@@ -1,10 +1,14 @@
 package fx50.nodes;
 
+import fx50.API.InputToken;
 import fx50.CalculatorHelper;
 import org.bychan.core.dynamic.UserParserCallback;
 
 import java.io.PrintStream;
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import static fx50.ParsingHelper.nextMustBeSeparator;
 
@@ -30,5 +34,9 @@ public class ClearMemoryNode implements CalculatorNode {
 
     public String toString() {
         return "ClrMemory";
+    }
+
+    public List<InputToken> toInputTokens() {
+        return new ArrayList<>(Collections.singletonList(new InputToken("ClrMemory", "ClrMemory")));
     }
 }

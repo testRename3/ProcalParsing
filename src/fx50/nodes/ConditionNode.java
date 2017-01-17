@@ -1,8 +1,13 @@
 package fx50.nodes;
 
+import fx50.API.InputToken;
 import org.bychan.core.dynamic.UserParserCallback;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 import static fx50.CalculatorHelper.Tokens.*;
 import static fx50.ParsingHelper.indent;
@@ -52,5 +57,16 @@ public class ConditionNode implements CalculatorNode {
                 " Then\n" + indent(thenNode.toString()) +
                 (elseNode != null ? "\nElse\n" + indent(elseNode.toString()) : "") +
                 "\nIfEnd";
+    }
+
+    public List<InputToken> toInputTokens() {
+        List<InputToken> resultTokens = new ArrayList<>(Collections.singletonList(new InputToken("If", "If ")));
+        resultTokens.addAll(ifNode.toInputTokens());
+        resultTokens.add(new InputToken("Then", "Then "));
+        if (elseNode != null) {
+            resultTokens.add(new InputToken("Else", "Else "));
+            resultTokens.addAll(elseNode.toInputTokens());
+        }
+        return resultTokens;
     }
 }

@@ -1,8 +1,10 @@
 package fx50.nodes;
 
+import fx50.API.InputToken;
 import fx50.CalcMath.CalcMath;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 /**
  * Combination Node
@@ -29,5 +31,12 @@ public class CombinationNode implements CalculatorNode {
 
     public String toString() {
         return "(" + left.toString() + "C" + right.toString() + ")";
+    }
+
+    public List<InputToken> toInputTokens() {
+        List<InputToken> leftTokens = left.toInputTokens();
+        leftTokens.add(new InputToken("C", "C"));
+        leftTokens.addAll(right.toInputTokens());
+        return leftTokens;
     }
 }
