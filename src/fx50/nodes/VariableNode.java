@@ -14,7 +14,7 @@ import java.util.List;
  * Variable Node
  */
 public class VariableNode extends NumberNode {
-    protected final String variableName;
+    private final String variableName;
 
     public VariableNode(Lexeme lexeme) {
         this.variableName = lexeme.getText().substring(1);

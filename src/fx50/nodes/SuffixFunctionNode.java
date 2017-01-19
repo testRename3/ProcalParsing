@@ -19,18 +19,16 @@ import java.util.List;
 public class SuffixFunctionNode implements CalculatorNode {
     private final CalculatorNode left;
     private final String functionName;
-    private final PrintStream out;
     private Method method;
     private ArrayList<BigDecimal> args = new ArrayList<>();
 
-    public SuffixFunctionNode(CalculatorNode left, UserParserCallback parser, Lexeme lexeme, PrintStream out) {
-        this(left, parser, lexeme.getText(), out);
+    public SuffixFunctionNode(CalculatorNode left, UserParserCallback parser, Lexeme lexeme) {
+        this(left, parser, lexeme.getText());
     }
 
-    public SuffixFunctionNode(CalculatorNode input, UserParserCallback parser, String functionName, PrintStream out) {
+    public SuffixFunctionNode(CalculatorNode input, UserParserCallback parser, String functionName) {
         this.left = input;
         this.functionName = functionName;
-        this.out = out;
         try {
             method = SuffixFn.class.getMethod(functionName, ArrayList.class);
         } catch (SecurityException e) {parser.abort("Security Exception");}
@@ -56,8 +54,8 @@ public class SuffixFunctionNode implements CalculatorNode {
 
         try {
             result = (BigDecimal) method.invoke(this, args);
-        } catch (IllegalArgumentException e) {out.println("Runtime Error: IllegalArgumentException");}
-        catch (IllegalAccessException e) {out.println("Runtime Error: IllegalAccessException");}
+        } catch (IllegalArgumentException e) {throw new ArithmeticException("Runtime Error: IllegalArgumentException");}
+        catch (IllegalAccessException e) {throw new RuntimeException("Runtime Error: IllegalAccessException");}
         catch (InvocationTargetException e) {throw new ArithmeticException("Runtime Error: Math Error");}
 
         return result;

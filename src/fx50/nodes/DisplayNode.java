@@ -1,6 +1,7 @@
 package fx50.nodes;
 
 import fx50.API.InputToken;
+import fx50.CalculatorHelper;
 import org.bychan.core.dynamic.UserParserCallback;
 
 import java.io.PrintStream;
@@ -15,17 +16,15 @@ import static fx50.CalcMath.CalcMath.sigfig;
  * Statement Node
  */
 public class DisplayNode extends StatementNode {
-    private final PrintStream out;
 
-    public DisplayNode(CalculatorNode left, UserParserCallback<CalculatorNode> parser, PrintStream out) {
+    public DisplayNode(CalculatorNode left, UserParserCallback<CalculatorNode> parser) {
         super(left, parser);
-        this.out = out;
     }
 
     public BigDecimal evaluate() {
         BigDecimal leftResult;
         leftResult = left.evaluate();
-        out.println(left.toString() + " = " + sigfig(leftResult, 10).toString() + " [DISPLAY]");
+        CalculatorHelper.io.printOutput(left.toString() + " = " + sigfig(leftResult, 10).toString() + " [DISPLAY]");
         if (!isLast) {
             return right.evaluate();
         } else

@@ -23,10 +23,10 @@ public class WhileLoopNode implements CalculatorNode {
     private CalculatorNode doNode;
 
     public WhileLoopNode(CalculatorNode left, UserParserCallback<CalculatorNode> parser, Lexeme<CalculatorNode> lexeme) {
-        conditionNode = (CalculatorNode) parser.expression(left, 3);
+        conditionNode = parser.expression(left, 3);
 
         parser.expectSingleLexeme(colon.getKey());
-        doNode = (CalculatorNode) parser.expression(left);
+        doNode = parser.expression(left);
 
         parser.expectSingleLexeme(loopWhileEnd.getKey());
         nextMustBeSeparator(parser, "WhileEnd");

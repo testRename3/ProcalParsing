@@ -15,6 +15,7 @@ import java.util.Scanner;
 
 import static fx50.CalcMath.CalcMath.sigfig;
 import static fx50.ParsingHelper.indent;
+import static fx50.ParsingHelper.sanitizeInput;
 
 public class Main {
     static Language<CalculatorNode> l;
@@ -110,13 +111,7 @@ public class Main {
                 ParseResult<CalculatorNode> pr;
                 try {
                     //labels.clear();
-                    pr = lexParser.tryParse(
-                            line
-                            .replaceAll("display(?!:)", "display:")
-                            .replaceAll("\\s*$", "")
-                            .replaceAll("(?<=[^:])$", ":")
-                            .replaceAll("((?:(?<=&|\\$)\\w*)|\\)|\\d|(?<=Ans|Ran#))(?: *)(\\(|&|\\$|[A-Za-z_]+\\(|Ans|Ran#|E-*\\d\\d?(?!\\d))", "$1*$2")
-                    );
+                    pr = lexParser.tryParse(sanitizeInput(line));
                     parsedResult = pr.getRootNode().toString();
                     if (showParseResult)
                         System.out.println("----PARSE RESULT----\n" + indent(parsedResult) + "\n---END OF PARSE RESULT---");

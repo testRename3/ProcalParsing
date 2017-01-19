@@ -14,18 +14,15 @@ import java.util.List;
  */
 public class FactorialNode implements CalculatorNode {
     private final CalculatorNode left;
-    private final PrintStream out;
 
-    public FactorialNode(CalculatorNode left, PrintStream out) {
+    public FactorialNode(CalculatorNode left) {
         this.left = left;
-        this.out = out;
     }
 
     public BigDecimal evaluate() {
         BigDecimal leftResult = left.evaluate();
         if (!CalcMath.isInt(leftResult) || leftResult.compareTo(new BigDecimal(0)) < 0) {
-            out.println("Math Error: Number must be non-negative integer");
-            return null;
+            throw new ArithmeticException("Math Error: Number must be non-negative integer");
         }
         return CalcMath.factorial(leftResult);
     }

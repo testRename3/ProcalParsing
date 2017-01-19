@@ -11,19 +11,16 @@ import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 
-import static fx50.CalcMath.CalcMath.isInt;
-
 /**
  * CalculatorHelper
  */
 public class CalculatorHelper {
 
-    private static InputStream in = System.in;
-    private static PrintStream out = System.out;
+    public static IO io = new IO();
+    private static Language<CalculatorNode> l;
 
-    static void setInOut(InputStream i, PrintStream o) {
-        in = i;
-        out = o;
+    static void setIO(IO io) {
+        CalculatorHelper.io = io;
     }
 
     public static class VariableMap {
@@ -167,18 +164,18 @@ public class CalculatorHelper {
                     if (!parser.nextIs(variable.getKey()))
                         parser.abort("Invalid assignment RHS. Expected a variable name");
                     VariableNode variableNode = (VariableNode) parser.expression(left);
-                    return new AssignmentNode(new InputNumberNode(in, out, variableNode.getName()), variableNode);
+                    return new AssignmentNode(new InputPromptNode(variableNode.getName()), variableNode);
                 });
 
         public static TokenDefinitionBuilder<CalculatorNode> display = b.newToken()
                 .named("display").matchesString("display")
                 .led((left, parser, lexeme) -> {
-                    return new DisplayNode(left, parser, out);
+                    return new DisplayNode(left, parser);
                 });
 
         public static TokenDefinitionBuilder<CalculatorNode> factorial = b.newToken()
                 .named("factorial").matchesString("!")
-                .led((left, parser, lexeme) -> new FactorialNode(left, out));
+                .led((left, parser, lexeme) -> new FactorialNode(left));
 
         public static TokenDefinitionBuilder<CalculatorNode> modulo = b.newToken()
                 .named("modulo").matchesString("mod")
@@ -213,7 +210,7 @@ public class CalculatorHelper {
 
         public static TokenDefinitionBuilder<CalculatorNode> suffixFunction = b.newToken()
                 .named("suffixFunction").matchesPattern("[A-Za-z_]\\w+")
-                .led((left, parser, lexeme) -> new SuffixFunctionNode(left, parser, lexeme, out));
+                .led(SuffixFunctionNode::new);
 
         public static TokenDefinitionBuilder<CalculatorNode> booleanNotEqual = b.newToken()
                 .named("booleanNotEqual").matchesString("!=")
@@ -276,9 +273,9 @@ public class CalculatorHelper {
                 .named("comma").matchesString(",");
     }
 
-    public static Language<CalculatorNode> getFx50Language() throws Exception {
+    public static Language<CalculatorNode> createFx50Language() throws Exception {
         b.newToken().named("clearMemory").matchesString("ClrMemory")
-                .nud((left, parser, lexeme) -> new ClearMemoryNode(left, parser, out)).build();
+                .nud(ClearMemoryNode::new).build();
 
         b.newToken().named("whitespace").matchesPattern("\\s+").discardAfterLexing().build();
 
@@ -359,5 +356,11 @@ public class CalculatorHelper {
         // leftBindingPower applies only to led; this merges the left to group tokens thus write the tree of brackets
 
         return b.completeLanguage();
+    }
+
+    public static Language<CalculatorNode> getFx50Language() throws Exception {
+        if (l == null)
+            l = createFx50Language();
+        return l;
     }
 }
