@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Fx50.iml" filepath="$PROJECT_DIR$/Fx50.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/fx50.iml" filepath="$PROJECT_DIR$/.idea/modules/fx50.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/fx50_main.iml" filepath="$PROJECT_DIR$/.idea/modules/fx50_main.iml" group="fx50" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/fx50_test.iml" filepath="$PROJECT_DIR$/.idea/modules/fx50_test.iml" group="fx50" />
     </modules>
   </component>
 </project>

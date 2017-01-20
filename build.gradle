@@ -1,0 +1,27 @@
+group 'dcheungaa.procal'
+version '1.0-SNAPSHOT'
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath 'me.tatarka:gradle-retrolambda:3.4.0'
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+apply plugin: 'java'
+apply plugin: 'me.tatarka.retrolambda'
+
+compileJava {
+    options.encoding = 'windows-1251'
+}
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'jars')
+}

@@ -1,0 +1,12 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="fx50:jar2">
+    <output-path>$PROJECT_DIR$/classes/artifacts/fx50_jar2</output-path>
+    <root id="archive" name="fx50.jar">
+      <element id="extracted-dir" path="$PROJECT_DIR$/jars/rjm.jar" path-in-jar="/" />
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/src/main/java/META-INF/MANIFEST.MF" />
+      </element>
+      <element id="module-output" name="fx50_main" />
+    </root>
+  </artifact>
+</component>
